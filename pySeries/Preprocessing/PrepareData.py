@@ -1,6 +1,6 @@
 """
 PrepareData
-=============
+===========
 
 Filter signals using PCA decomposition of their fast-fourier transform
 
