@@ -65,7 +65,7 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
     #}
 
 if on_rtd:
-    MOCK_MODULES = ['sphinx_paramlinks','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
+    MOCK_MODULES = ['sphinx_paramlinks','seaborn', 'obspy.signal.filter','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
     for mod_name in MOCK_MODULES:
         sys.modules[mod_name] = mock.Mock()
     # Use a better theme for the docs
@@ -134,7 +134,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../..'))
-sys.path.insert(0,"/Users/ryszardcetnarski/Desktop/pySeries")
+sys.path.insert(0,"/Users/ryszardcetnarski/pySeries")
 
 # -- General configuration ------------------------------------------------
 
