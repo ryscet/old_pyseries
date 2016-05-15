@@ -32,7 +32,7 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 #latex_elements = {
     # Additional stuff for the LaTeX preamble.
-        'preamble': "".join((
+     #   'preamble': "".join((
   #      '\usepackage{shortvrb}',
   #      '\usepackage[postscript]{ucs}',
     #    '\usepackage{pstricks}',
