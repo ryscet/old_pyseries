@@ -1,5 +1,5 @@
 .. toctree::
    :maxdepth: 3
 
-.. automodule:: pyseries.Preprocessing.PrepareData
+.. automodule:: Preprocessing.PrepareData
    :members:

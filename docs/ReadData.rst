@@ -3,5 +3,5 @@
 .. toctree::
    :maxdepth: 3
 
-.. automodule:: pyseries.LoadingData.ReadData
+.. automodule:: old_pyseries.pyseries.LoadingData.ReadData
    :members:
