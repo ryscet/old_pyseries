@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PCA filtering &mdash; pySeries 1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="pySeries 1 documentation" href="../../index.html" />
+    <link rel="next" title="ANOVA" href="../ANOVA_tutorial/ANOVA_tutorial.html" />
+    <link rel="prev" title="Anova" href="../../Analyze.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          pySeries</a>
+        <span class="navbar-text navbar-version pull-left"><b>1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ReadData.html">ReadData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Preprocess.html">PrepareData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Analyze.html">Anova</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PCA filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ANOVA_tutorial/ANOVA_tutorial.html">ANOVA</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">PCA filtering</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../../Analyze.html" title="Previous Chapter: Anova"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Anova</span>
+    </a>
+  </li>
+  <li>
+    <a href="../ANOVA_tutorial/ANOVA_tutorial.html" title="Next Chapter: ANOVA"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">ANOVA &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../../_sources/Tutorials/PCA_filtering_tutorial/PCA_filtering_tutorial.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="pca-filtering">
+<h1>PCA filtering<a class="headerlink" href="#pca-filtering" title="Permalink to this headline">¶</a></h1>
+<p>Filter signals using PCA decomposition (<code class="xref py py-func docutils literal"><span class="pre">sklearn.decomposition.PCA()</span></code>) of their fast-fourier transform</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Identify outliers in fft-transformed signal with <code class="xref py py-func docutils literal"><span class="pre">PrepareData.MD_removeOutliers()</span></code></li>
+<li>Identify clusters in ft-transformed signal with  <code class="xref py py-func docutils literal"><span class="pre">PrepareData.Cluster()</span></code></li>
+</ol>
+</div></blockquote>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">LoadingData.ReadData</span> <span class="k">as</span> <span class="nn">rd</span>
+<span class="kn">import</span> <span class="nn">Preprocessing.PrepareData</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">in_path</span> <span class="o">=</span> <span class="s1">&#39;/Users/ryszardcetnarski/Desktop/Nencki/Badanie_NFB/Dane/fft_treningi/&#39;</span>
+<span class="n">filter_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;P3_trening_&#39;</span><span class="p">,</span><span class="s1">&#39;P4_trening_&#39;</span><span class="p">,</span> <span class="s1">&#39;F3_trening_&#39;</span><span class="p">,</span> <span class="s1">&#39;F4_trening_&#39;</span><span class="p">]</span>
+<span class="c1">#load averaged fft from trainings</span>
+<span class="n">signals_dict</span> <span class="o">=</span> <span class="n">rd</span><span class="o">.</span><span class="n">LoadAvg</span><span class="p">(</span><span class="n">in_path</span><span class="p">,</span> <span class="n">filter_list</span><span class="p">,</span> <span class="n">freq_lim</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">40</span><span class="p">])</span>
+<span class="c1">#label the outliers</span>
+<span class="n">labels</span><span class="p">,</span> <span class="n">signals_colum_major</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">FilterIndividualAndGroup</span><span class="p">(</span><span class="n">signals_dict</span><span class="p">,</span> <span class="n">plot_on</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1">#Plot&#39;em</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">MarkOutliers</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">labels</span><span class="p">[</span><span class="s1">&#39;mask&#39;</span><span class="p">]</span> <span class="o">==</span><span class="mi">1</span><span class="p">],</span> <span class="n">rd</span><span class="o">.</span><span class="n">LoadAvg</span><span class="p">(</span><span class="n">in_path</span><span class="p">,</span> <span class="n">filter_list</span><span class="p">,</span> <span class="n">freq_lim</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="n">outliers</span> <span class="n">inside</span> <span class="n">individual</span><span class="p">:</span> <span class="mi">338</span><span class="p">,</span> <span class="mf">0.039348</span> <span class="o">%</span>
+
+<span class="n">For</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">The</span> <span class="n">average</span> <span class="n">silhouette_score</span> <span class="ow">is</span> <span class="p">:</span> <span class="mf">0.735854433865</span>
+
+<span class="n">N</span> <span class="n">outliers</span> <span class="n">across</span> <span class="n">group</span><span class="p">:</span> <span class="mi">539</span><span class="p">,</span> <span class="mf">0.065317</span> <span class="o">%</span>
+</pre></div>
+</div>
+<img alt="../../_images/output_1_2.png" src="../../_images/output_1_2.png" />
+<img alt="../../_images/output_1_3.png" src="../../_images/output_1_3.png" />
+<img alt="../../_images/output_1_4.png" src="../../_images/output_1_4.png" />
+<img alt="../../_images/output_1_5.png" src="../../_images/output_1_5.png" />
+<img alt="../../_images/output_1_6.png" src="../../_images/output_1_6.png" />
+<img alt="../../_images/output_1_7.png" src="../../_images/output_1_7.png" />
+<img alt="../../_images/output_1_8.png" src="../../_images/output_1_8.png" />
+<img alt="../../_images/output_1_9.png" src="../../_images/output_1_9.png" />
+<img alt="../../_images/output_1_10.png" src="../../_images/output_1_10.png" />
+<img alt="../../_images/output_1_11.png" src="../../_images/output_1_11.png" />
+<img alt="../../_images/output_1_12.png" src="../../_images/output_1_12.png" />
+<img alt="../../_images/output_1_13.png" src="../../_images/output_1_13.png" />
+<img alt="../../_images/output_1_14.png" src="../../_images/output_1_14.png" />
+<img alt="../../_images/output_1_15.png" src="../../_images/output_1_15.png" />
+<img alt="../../_images/output_1_16.png" src="../../_images/output_1_16.png" />
+<img alt="../../_images/output_1_17.png" src="../../_images/output_1_17.png" />
+<img alt="../../_images/output_1_18.png" src="../../_images/output_1_18.png" />
+<img alt="../../_images/output_1_19.png" src="../../_images/output_1_19.png" />
+<img alt="../../_images/output_1_20.png" src="../../_images/output_1_20.png" />
+<img alt="../../_images/output_1_21.png" src="../../_images/output_1_21.png" />
+<img alt="../../_images/output_1_22.png" src="../../_images/output_1_22.png" />
+<img alt="../../_images/output_1_23.png" src="../../_images/output_1_23.png" />
+<img alt="../../_images/output_1_24.png" src="../../_images/output_1_24.png" />
+<img alt="../../_images/output_1_25.png" src="../../_images/output_1_25.png" />
+<img alt="../../_images/output_1_26.png" src="../../_images/output_1_26.png" />
+<img alt="../../_images/output_1_27.png" src="../../_images/output_1_27.png" />
+<img alt="../../_images/output_1_28.png" src="../../_images/output_1_28.png" />
+<img alt="../../_images/output_1_29.png" src="../../_images/output_1_29.png" />
+<img alt="../../_images/output_1_30.png" src="../../_images/output_1_30.png" />
+<img alt="../../_images/output_1_31.png" src="../../_images/output_1_31.png" />
+<img alt="../../_images/output_1_32.png" src="../../_images/output_1_32.png" />
+<img alt="../../_images/output_1_33.png" src="../../_images/output_1_33.png" />
+<img alt="../../_images/output_1_34.png" src="../../_images/output_1_34.png" />
+<img alt="../../_images/output_1_35.png" src="../../_images/output_1_35.png" />
+<img alt="../../_images/output_1_36.png" src="../../_images/output_1_36.png" />
+<img alt="../../_images/output_1_37.png" src="../../_images/output_1_37.png" />
+<img alt="../../_images/output_1_38.png" src="../../_images/output_1_38.png" />
+<img alt="../../_images/output_1_39.png" src="../../_images/output_1_39.png" />
+<img alt="../../_images/output_1_40.png" src="../../_images/output_1_40.png" />
+<img alt="../../_images/output_1_41.png" src="../../_images/output_1_41.png" />
+<img alt="../../_images/output_1_42.png" src="../../_images/output_1_42.png" />
+<img alt="../../_images/output_1_43.png" src="../../_images/output_1_43.png" />
+<img alt="../../_images/output_1_44.png" src="../../_images/output_1_44.png" />
+<img alt="../../_images/output_1_45.png" src="../../_images/output_1_45.png" />
+<img alt="../../_images/output_1_46.png" src="../../_images/output_1_46.png" />
+<img alt="../../_images/output_1_47.png" src="../../_images/output_1_47.png" />
+<img alt="../../_images/output_1_48.png" src="../../_images/output_1_48.png" />
+<img alt="../../_images/output_1_49.png" src="../../_images/output_1_49.png" />
+<img alt="../../_images/output_1_50.png" src="../../_images/output_1_50.png" />
+<img alt="../../_images/output_1_51.png" src="../../_images/output_1_51.png" />
+<img alt="../../_images/output_1_52.png" src="../../_images/output_1_52.png" />
+<img alt="../../_images/output_1_53.png" src="../../_images/output_1_53.png" />
+<img alt="../../_images/output_1_54.png" src="../../_images/output_1_54.png" />
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Ryszard Cetnarski.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
