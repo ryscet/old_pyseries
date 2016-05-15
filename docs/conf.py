@@ -135,6 +135,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0,"/Users/ryszardcetnarski/old_pyseries/pyseries")
+sys.path.insert(0,"/Users/ryszardcetnarski/old_pyseries")
 
 # -- General configuration ------------------------------------------------
 
