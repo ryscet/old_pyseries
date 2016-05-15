@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# pySeries documentation build configuration file, created by
-# sphinx-quickstart on Mon Mar 14 16:17:27 2016.
+# pyseries documentation build configuration file, created by
+# sphinx-quickstart on Sun May 15 17:34:52 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -13,128 +13,13 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-
-
-
 import sys
 import os
-
-#Currently if you import sphinx_rtd_theme in your local sphinx build, then pass that same config to Read the Docs, it will fail, since RTD gets confused. If you want to run this theme locally and then also have it build on RTD, then you can add something like this to your config. Thanks to Daniel Oaks for this.
-#https://github.com/snide/sphinx_rtd_theme
-# on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
-import mock
-#sys.setdefaultencoding("utf-8")
-
-#html_theme = 'bootstrap-flatly'
-#html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
-
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-#latex_elements = {
-    # Additional stuff for the LaTeX preamble.
-     #   'preamble': "".join((
-  #      '\usepackage{shortvrb}',
-  #      '\usepackage[postscript]{ucs}',
-    #    '\usepackage{pstricks}',
-  #      '\usepackage[utf8x]{inputenc}',
-
-#        '\DeclareUnicodeCharacter{2550}{═}', # NO-BREAK SPACE
-
-   #     '\DeclareUnicodeCharacter{00A0}{ }',
-
- #       '\DeclareUnicodeCharacter{205}{═}', # NO-BREAK 
-#
-      #  '\DeclareUnicodeCharacter{2560}{╞}', # NO-BREAK 
-
-    #    '\DeclareUnicodeCharacter{2558}{╘}', # NO-BREAK 
-
-   #     '\DeclareUnicodeCharacter{2567}{╧}', # NO-BREAK 
-
-   #     '\DeclareUnicodeCharacter{2569}{╪}', # NO-BREAK 
-
-        #'\DeclareUnicodeCharacter{2564}{╤}', # NO-BREAK 
-        #'\DeclareUnicodeCharacter{2563}{=}', # NO-BREAK 
-
-        #'\DeclareUnicodeCharacter{2562}{╡}', # NO-BREAK 
-
-       # '\DeclareUnicodeCharacter{255B}{╛}', # NO-BREAK 
-
-      #  '\DeclareUnicodeCharacter{2555}{╕}', # NO-BREAK ═
-
-     #   )),
-    #}
-
-if on_rtd:
-    MOCK_MODULES = ['sphinx_paramlinks','seaborn', 'obspy.signal.filter','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
-    for mod_name in MOCK_MODULES:
-        sys.modules[mod_name] = mock.Mock()
-    # Use a better theme for the docs
-    html_theme = 'bootstrap'
-    html_theme_path = ['themes']
-
-    # (Optional) Logo. Should be exactly 24x24 px to fit the nav. bar.
-    # Path should be relative to the static files directory.
-    #html_logo = "vincent.jpg"
-
-    # Theme options are theme-specific and customize the look and feel of a
-    # theme further.
-    html_theme_options = {
-        # Global TOC depth for "site" navbar tab. (Default: 1)
-        # Switching to -1 shows all levels.
-        'globaltoc_depth': 2,
-
-        # HTML navbar class (Default: "navbar") to attach to <div> element.
-        # For black navbar, do "navbar navbar-inverse"
-        #'navbar_class': "navbar navbar-inverse",
-
-        # Bootswatch (http://bootswatch.com/) theme.
-        'bootswatch_theme': 'spacelab',
-        #
-        # Options are nothing with "" (default) or the name of a valid theme
-        # such as "amelia" or "cosmo".
-        #
-        # Note that this is served off CDN, so won't be available offline.
-        #'bootswatch_theme': "spacelab",
-
-    }
-
-
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    #import sphinx_rtd_theme
-    import sphinx_bootstrap_theme
-
-    #html_theme = 'sphinx_rtd_theme'
-    #html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-    html_theme = 'bootstrap'
-    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
-
-     # Theme options are theme-specific and customize the look and feel of a
-    # theme further.
-    html_theme_options = {
-        # Global TOC depth for "site" navbar tab. (Default: 1)
-        # Switching to -1 shows all levels.
-        'globaltoc_depth': 2,
-
-        # HTML navbar class (Default: "navbar") to attach to <div> element.
-        # For black navbar, do "navbar navbar-inverse"
-        #'navbar_class': "navbar navbar-inverse",
-
-        # Bootswatch (http://bootswatch.com/) theme.
-        'bootswatch_theme': 'flatly',
-        #
-        # Options are nothing with "" (default) or the name of a valid theme
-        # such as "amelia" or "cosmo".
-        #
-        # Note that this is served off CDN, so won't be available offline.
-        #'bootswatch_theme': "spacelab",
-    }
-# otherwise, readthedocs.org uses their theme by default, so no need to specify it
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('../..'))
-#sys.path.insert(0,"/Users/ryszardcetnarski/pySeries")
+#sys.path.insert(0, os.path.abspath('.'))
 
 # -- General configuration ------------------------------------------------
 
@@ -147,7 +32,9 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.todo',
-    'sphinx.ext.napoleon',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -158,7 +45,6 @@ templates_path = ['_templates']
 # source_suffix = ['.rst', '.md']
 source_suffix = '.rst'
 
-
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'
 
@@ -166,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'pySeries'
+project = 'pyseries'
 copyright = '2016, Ryszard Cetnarski'
 author = 'Ryszard Cetnarski'
 
@@ -195,7 +81,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -206,7 +92,7 @@ exclude_patterns = []
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-add_module_names = False
+#add_module_names = True
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
@@ -229,7 +115,7 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#html_theme = 'sphinx_rtd_theme'
+html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -241,7 +127,7 @@ todo_include_todos = True
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
-#html_title = 'pySeries v1'
+#html_title = 'pyseries v1'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -323,17 +209,29 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pySeriesdoc'
+htmlhelp_basename = 'pyseriesdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
+latex_elements = {
+# The paper size ('letterpaper' or 'a4paper').
+#'papersize': 'letterpaper',
 
+# The font size ('10pt', '11pt' or '12pt').
+#'pointsize': '10pt',
+
+# Additional stuff for the LaTeX preamble.
+#'preamble': '',
+
+# Latex figure (float) alignment
+#'figure_align': 'htbp',
+}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pySeries.tex', 'pySeries Documentation',
+    (master_doc, 'pyseries.tex', 'pyseries Documentation',
      'Ryszard Cetnarski', 'manual'),
 ]
 
@@ -363,7 +261,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pyseries', 'pySeries Documentation',
+    (master_doc, 'pyseries', 'pyseries Documentation',
      [author], 1)
 ]
 
@@ -377,8 +275,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pySeries', 'pySeries Documentation',
-     author, 'pySeries', 'One line description of project.',
+    (master_doc, 'pyseries', 'pyseries Documentation',
+     author, 'pyseries', 'One line description of project.',
      'Miscellaneous'),
 ]
 
