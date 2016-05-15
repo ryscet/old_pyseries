@@ -30,7 +30,7 @@ import mock
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-latex_elements = {
+#latex_elements = {
     # Additional stuff for the LaTeX preamble.
         'preamble': "".join((
   #      '\usepackage{shortvrb}',
