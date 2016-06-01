@@ -12,7 +12,9 @@ clock, so best do experiment and recording on the same machine.
 """
 
 import pandas as pd
-#import xml.etree.ElementTree as etree
+import xml.etree.ElementTree as etree
+from xml.parsers import expat
+
 import pyedflib 
 import numpy as np
 from datetime import datetime
@@ -22,26 +24,40 @@ import seaborn as sns
 from scipy import signal
 import obspy.signal.filter as filters
 
+
+#Combine_EDF_XML(path)
+
+
 ##bandstop(data, freqmin, freqmax, df, corners=4, zerophase=False)[source]
 
 
 #TODO Make an organized/relative paths way of maintaining database
-#TODO make a way of marking event time on the spectrogram (approximate)
+
+path = '/Users/user/Desktop/Piloty EEG Nencki /Ola_Intern/31_05/'
+
+def mark_events():
+    db = Combine_EDF_XML(path)
+    fig, axes = plt.subplots(1,1)
+    axes.plot(db["timestamp"], db["EEG O1"])
+    for idx, row in db["events"].iterrows():
+        axes.axvline(idx, color='r', linestyle='--')
+        #print(row.index)
+
 def Run():
     n_back =  500
     n_forth = 12
     
-    electrode_slices = Make_Slices_for_Channel(['EEG Fpz-Cz'], n_back, n_forth )
+    electrode_slices = Make_Slices_for_Channel(['EEG O2'], n_back, n_forth )
 
-    PlotErp(electrode_slices['EEG Fpz-Cz'], n_back)
+    PlotErp(electrode_slices['EEG O2'], n_back)
     
-    PlotSpectrogram(electrode_slices['EEG Fpz-Cz'], n_back, n_forth)
+    PlotSpectrogram(electrode_slices['EEG O2'], n_back, n_forth)
     
-    PlotPowerSpectrum(electrode_slices['EEG Fpz-Cz'])
+    PlotPowerSpectrum(electrode_slices['EEG O2'])
 
 def Make_Slices_for_Channel(ch_names,n_samples_back, n_samples_forth):
-    channels = Combine_EDF_XML()
-    events = Random_Events()
+    channels = Combine_EDF_XML(path)
+    events = channels["events"]
     
     electrode_slices = {}
     
@@ -180,11 +196,11 @@ def Make_Slices_Groups(data, events, n_samples_back, n_samples_forth):
 
     grouped_slices = {}   
     
-    for name, events_single_type in events.groupby('event_code'):
+    for name, events_single_type in events.groupby('code'):
         grouped_slices[str(name)] = Cut_Slices_From_Signal(data, events_single_type, n_samples_back, n_samples_forth)    
     return grouped_slices
 
-def Combine_EDF_XML():
+def Combine_EDF_XML(path):
     """Extracts EEG channels data from edf and creates a new channel with timestamps. 
          
          Returns
@@ -193,8 +209,8 @@ def Combine_EDF_XML():
              stores EEG timeseries and timestamps
     
     """
-    signal_dict = Read_EDF()
-    start_time = Read_XML()
+    signal_dict = Read_EDF(path + "signal.edf")
+    start_time = Read_XML(path + "digi_log.xml")
     
     #freq = 1000ms / 500 i.e. how much time between each sample
     freq='2ms' 
@@ -206,6 +222,15 @@ def Combine_EDF_XML():
     index = pd.date_range(start_time['UNIXTIME'].iloc[0], periods= n_samples, freq = freq)
     
     signal_dict['timestamp'] = index
+
+
+
+    log = pd.read_csv(path + 'unity_log.csv',parse_dates = True, index_col = 2)
+    
+    signal_dict['events'] = log
+
+    
+    
     return signal_dict
     
 def GetMaxLength(_dict):        
@@ -253,7 +278,8 @@ def Find_Closest_Sample(df, dtObj):
     return np.argmin(np.abs(df.index - dtObj))
     
 
-def Read_XML():
+def Read_XML(path):
+#    import xml.etree.cElementTree as ET
     """Read the header for the signal from .EVX.
 
        Returns
@@ -261,9 +287,9 @@ def Read_XML():
        df: DataFrame
            Contains timestamp marking first EEG sample
     """
+
     
-    path = '/Users/user/Desktop/ReadyDigiDataBase/test.xml'    
-    with open(path, 'r') as xml_file:
+    with open(path, mode='r',encoding='utf-8') as xml_file:
         xml_tree = etree.parse(xml_file)        
         root = xml_tree.getroot()
 #Get only the relevant fields  
@@ -291,7 +317,7 @@ def Random_Events():
     for i in range(0,20): 
         year = 2016
         month = 5
-        day = 11
+        day = 31
         hour = random.randint(13, 14)
         minute = random.randint(42,59)
         second = random.randint(0,59)
@@ -299,14 +325,11 @@ def Random_Events():
         dates.append(datetime(year, month, day, hour, minute, second, microseconds))
         
     df = pd.DataFrame(index =pd.to_datetime(dates, infer_datetime_format=True))
-    df['event_code'] =  np.hstack((np.zeros(10), np.ones(10)))
+    df['code'] =  np.hstack((np.zeros(10), np.ones(10)))
 
     return df.sort_index()
     
-def ReadEvents():
-    log = pd.read_csv('/Users/user/Desktop/Resty/log.csv',parse_dates = True)
-    timestamps = pd.to_datetime(log['time'])
-    
+
     
 #    
 #def Sample_Data():
