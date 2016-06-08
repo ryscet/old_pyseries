@@ -4,4 +4,6 @@
 
 """
 
-from . import PrepareData as prepare
+from . import PrepareData
+from . import ArtifactRemoval 
+from . import MakeSlices 

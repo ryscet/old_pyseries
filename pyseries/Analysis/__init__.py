@@ -7,3 +7,4 @@ from . import Anova
 from . import CrossCorrelate 
 from . import Normalize 
 from . import Trends
+from . import Explore

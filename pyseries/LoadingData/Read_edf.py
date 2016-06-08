@@ -19,13 +19,14 @@ import numpy as np
 from datetime import datetime
 import random
 import struct
+import pyseries.Preprocessing.ArtifactRemoval as ar
 
 
 
 
 #TODO Make an organized/relative paths way of maintaining database
 #path = '/Users/user/Desktop/Nagrania/rest/Rysiek_03_06/'
-def Combine_EDF_XML(path):
+def Combine_EDF_XML(path, bandpass_filter):
     """Extracts EEG channels data from edf and creates a new channel with timestamps. 
          
          Returns
@@ -36,6 +37,11 @@ def Combine_EDF_XML(path):
     """
     signal_dict = Read_EDF(path + "sygnal.edf")
     start_time = Read_XML(path + "digi_log.xml")
+
+    if(bandpass_filter == True):
+        for chan_name, sig in signal_dict.items():
+            signal_dict[chan_name] = ar.band_pass(sig, 2,30)
+
     
     #freq = 1000ms / 500 i.e. how much time between each sample
     freq='2ms' 
