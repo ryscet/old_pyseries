@@ -1,3 +1,4 @@
+pyseries
 numpy
 pandas
 scipy
