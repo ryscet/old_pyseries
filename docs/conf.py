@@ -75,6 +75,37 @@ if on_rtd:
         #'bootswatch_theme': "spacelab",
 
     }
+
+ 
+if not on_rtd:  # only import and set the theme if we're building docs locally
+    #import sphinx_rtd_theme
+    import sphinx_bootstrap_theme
+
+    #html_theme = 'sphinx_rtd_theme'
+    #html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+    html_theme = 'bootstrap'
+    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+
+     # Theme options are theme-specific and customize the look and feel of a
+    # theme further.
+    html_theme_options = {
+        # Global TOC depth for "site" navbar tab. (Default: 1)
+        # Switching to -1 shows all levels.
+        'globaltoc_depth': 2,
+
+        # HTML navbar class (Default: "navbar") to attach to <div> element.
+        # For black navbar, do "navbar navbar-inverse"
+        #'navbar_class': "navbar navbar-inverse",
+
+        # Bootswatch (http://bootswatch.com/) theme.
+        'bootswatch_theme': 'flatly',
+        #
+        # Options are nothing with "" (default) or the name of a valid theme
+        # such as "amelia" or "cosmo".
+        #
+        # Note that this is served off CDN, so won't be available offline.
+        #'bootswatch_theme': "spacelab",
+    }   
 templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
