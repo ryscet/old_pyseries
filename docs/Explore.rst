@@ -2,5 +2,5 @@
 .. toctree::
    :maxdepth: 1
 
-.. automodule:: pyseries.Analysis.Anova
+.. automodule:: pyseries.Analysis.Explore
    :members:
