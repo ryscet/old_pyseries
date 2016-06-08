@@ -66,7 +66,7 @@ if on_rtd:
         #'navbar_class': "navbar navbar-inverse",
 
         # Bootswatch (http://bootswatch.com/) theme.
-        'bootswatch_theme': 'spacelab',
+        #'bootswatch_theme': 'spacelab',
         #
         # Options are nothing with "" (default) or the name of a valid theme
         # such as "amelia" or "cosmo".
