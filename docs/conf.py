@@ -60,7 +60,7 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 html_theme_path = ['themes']
 
 if on_rtd:
-    MOCK_MODULES = ['sphinx_paramlinks','seaborn','obspy.signal.filter','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
+    MOCK_MODULES = ['sphinx_paramlinks','seaborn','pyedflib','obspy.signal.filter','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
     for mod_name in MOCK_MODULES:
         sys.modules[mod_name] = mock.Mock()
 
