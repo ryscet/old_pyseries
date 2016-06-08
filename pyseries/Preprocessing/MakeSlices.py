@@ -4,7 +4,7 @@ Created on Thu Jun  2 11:20:45 2016
 
 @author: user
 """
-import obspy.signal.filter as filters
+import obspy as ob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,7 +14,7 @@ def mark_events(channels, ch_names):
     for name in ch_names:
         fig, axes = plt.subplots(1,1)
         
-        sig  = filters.bandpass(channels["EEG O1"], 2, 30, df = 500)
+        sig  = ob.signal.filter.bandpass(channels["EEG O1"], 2, 30, df = 500)
         axes.plot(channels["timestamp"], sig)
         
         for idx, row in channels["events"].iterrows():
@@ -28,7 +28,7 @@ def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
     electrode_slices = {}
     
     for name in ch_names:
-        filtered = filters.bandpass(channels[name], 2, 30, df = 500)
+        filtered = ob.signal.filter..bandpass(channels[name], 2, 30, df = 500)
         
         
         time_series =pd.Series(np.array(filtered, dtype = 'float32'), index = channels['timestamp'] )
