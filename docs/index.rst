@@ -1,6 +1,5 @@
-Welcome to pySeries documentation!
-====================================================
-
+Welcome to pyseries documentation!
+==================================
 .. image:: images/logo.jpg
 
 Overwiev
