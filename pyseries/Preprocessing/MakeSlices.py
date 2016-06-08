@@ -43,19 +43,19 @@ def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
 def Make_Slices_Groups(data, events, n_samples_back, n_samples_forth):
     """Creates a dict of epochs (np.arrays) per event type
     
-        Parameters
-        ----------
-        data: np.array
-            whole EEG signal
-        events: DataFrame
-            Timestamps and description of events
-        n_samples_back, n_samples_forth: (dict, dict)
-            Key is event name, item is window size around time of event
-        
-        Returns
-        -------
-        grouped slices: dict
-            Keys are event names, items are epochs (np.arrays)
+    Parameters
+    ----------
+    data: np.array
+        whole EEG signal
+    events: DataFrame
+        Timestamps and description of events
+    n_samples_back, n_samples_forth: (dict, dict)
+        Key is event name, item is window size around time of event
+    
+    Returns
+    -------
+    grouped slices: dict
+        Keys are event names, items are epochs (np.arrays)
         
     """
 
