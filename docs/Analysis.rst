@@ -1,10 +1,8 @@
-
-
 Analysis
 ========
 
 .. toctree::
    :maxdepth: 3
 
-   Explore
-   Anova
+   autodocs/Explore
+   autodocs.Anova
