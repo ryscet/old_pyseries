@@ -63,6 +63,65 @@ if on_rtd:
     MOCK_MODULES = ['sphinx_paramlinks','seaborn','pyedflib','obspy','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
     for mod_name in MOCK_MODULES:
         sys.modules[mod_name] = mock.Mock()
+         # Use a better theme for the docs
+    html_theme = 'bootstrap'
+    html_theme_path = ['themes']
+
+    # (Optional) Logo. Should be exactly 24x24 px to fit the nav. bar.
+    # Path should be relative to the static files directory.
+    #html_logo = "vincent.jpg"
+
+    # Theme options are theme-specific and customize the look and feel of a
+    # theme further.
+    html_theme_options = {
+        # Global TOC depth for "site" navbar tab. (Default: 1)
+        # Switching to -1 shows all levels.
+        'globaltoc_depth': 2,
+
+        # HTML navbar class (Default: "navbar") to attach to <div> element.
+        # For black navbar, do "navbar navbar-inverse"
+        #'navbar_class': "navbar navbar-inverse",
+
+        # Bootswatch (http://bootswatch.com/) theme.
+        'bootswatch_theme': 'spacelab',
+        #
+        # Options are nothing with "" (default) or the name of a valid theme
+        # such as "amelia" or "cosmo".
+        #
+        # Note that this is served off CDN, so won't be available offline.
+        #'bootswatch_theme': "spacelab",
+
+    }
+    
+if not on_rtd:  # only import and set the theme if we're building docs locally
+    #import sphinx_rtd_theme
+    import sphinx_bootstrap_theme
+
+    #html_theme = 'sphinx_rtd_theme'
+    #html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+    html_theme = 'bootstrap'
+    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+
+     # Theme options are theme-specific and customize the look and feel of a
+    # theme further.
+    html_theme_options = {
+        # Global TOC depth for "site" navbar tab. (Default: 1)
+        # Switching to -1 shows all levels.
+        'globaltoc_depth': 2,
+
+        # HTML navbar class (Default: "navbar") to attach to <div> element.
+        # For black navbar, do "navbar navbar-inverse"
+        #'navbar_class': "navbar navbar-inverse",
+
+        # Bootswatch (http://bootswatch.com/) theme.
+        'bootswatch_theme': 'flatly',
+        #
+        # Options are nothing with "" (default) or the name of a valid theme
+        # such as "amelia" or "cosmo".
+        #
+        # Note that this is served off CDN, so won't be available offline.
+        #'bootswatch_theme': "spacelab",
+    }
 
 # General information about the project.
 project = 'pyseries'
