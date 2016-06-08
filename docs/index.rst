@@ -1,13 +1,16 @@
-.. pyseries documentation master file, created by
-   sphinx-quickstart on Wed Jun  8 14:31:31 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to pySeries (pre-alpha stage) documentation!
+====================================================
 
-Welcome to pyseries's documentation!
-====================================
+.. image:: images/logo.jpg
 
-Contents:
+Overwiev
+^^^^^^^^
+pySeries is a package for statistical analysis of EEG data. Usefull for neuro- and cognitive-science academics looking for a quick start into EEG data analysis with python. 
 
+This package is an initial release. Testing in progress
+
+API
+^^^
 .. toctree::
    :maxdepth: 1
 
@@ -15,10 +18,9 @@ Contents:
 
 
 
-Indices and tables
-==================
+Installation
+^^^^^^^^^^^^
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+You can install using `pip <https://pypi.python.org/pypi/pySeries>`_:
 
+>>> sudo pip install pyseries
