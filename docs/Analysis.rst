@@ -1,13 +1,10 @@
 
 
-Welcome to pyseries's documentation!
-====================================
+Analysis
+========
 
 .. toctree::
    :maxdepth: 1
 
-Hwn i was neknxoxdj
-
-
-efcece
-cefec
+.. automodule:: pyseries.Analysis.Anova
+   :members:
