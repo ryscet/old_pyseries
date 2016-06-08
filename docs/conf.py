@@ -15,6 +15,7 @@
 
 import sys
 import os
+import mock
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -52,6 +53,16 @@ source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
+
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+
+html_theme_path = ['themes']
+
+if on_rtd:
+    MOCK_MODULES = ['sphinx_paramlinks','seaborn','pyseries.Analysis', 'pyseries.Analysis.Anova', 'pyseries.Preprocessing','pyseries.Preprocessing.PrepareData',   'pyseries','obspy.signal.filter','sphinx_bootstrap_theme','tabulate','sklearn','sklearn.cluster', 'sklearn.metrics','sklearn.decomposition','scipy.sparse', 'numpy', 'scipy','scipy.stats','scipy.io', 'matplotlib', 'matplotlib.pyplot','matplotlib.cm', 'scipy.interpolate', 'numpydoc', 'glob', 'pandas', 'deepdish']
+    for mod_name in MOCK_MODULES:
+        sys.modules[mod_name] = mock.Mock()
 
 # General information about the project.
 project = 'pyseries'
