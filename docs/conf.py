@@ -30,39 +30,7 @@ import mock
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-#latex_elements = {
-    # Additional stuff for the LaTeX preamble.
-    #    'preamble': "".join((
-  #      '\usepackage{shortvrb}',
-  #      '\usepackage[postscript]{ucs}',
-    #    '\usepackage{pstricks}',
-  #      '\usepackage[utf8x]{inputenc}',
 
-#        '\DeclareUnicodeCharacter{2550}{═}', # NO-BREAK SPACE
-
-   #     '\DeclareUnicodeCharacter{00A0}{ }',
-
- #       '\DeclareUnicodeCharacter{205}{═}', # NO-BREAK 
-#
-      #  '\DeclareUnicodeCharacter{2560}{╞}', # NO-BREAK 
-
-    #    '\DeclareUnicodeCharacter{2558}{╘}', # NO-BREAK 
-
-   #     '\DeclareUnicodeCharacter{2567}{╧}', # NO-BREAK 
-
-   #     '\DeclareUnicodeCharacter{2569}{╪}', # NO-BREAK 
-
-        #'\DeclareUnicodeCharacter{2564}{╤}', # NO-BREAK 
-        #'\DeclareUnicodeCharacter{2563}{=}', # NO-BREAK 
-
-        #'\DeclareUnicodeCharacter{2562}{╡}', # NO-BREAK 
-
-       # '\DeclareUnicodeCharacter{255B}{╛}', # NO-BREAK 
-
-      #  '\DeclareUnicodeCharacter{2555}{╕}', # NO-BREAK ═
-
-     #   )),
-    #}
 html_theme_path = ['themes']
 
 if on_rtd:
@@ -138,6 +106,8 @@ sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries/')
 sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries/pyseries')
 sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries/pyseries/Analysis')
+
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- General configuration ------------------------------------------------
 
