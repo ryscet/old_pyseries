@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jun  2 11:20:45 2016
+MakeSlices
+==========
 
-@author: user
+Making epochs (i.e slicing the signal) around events. 
+After epoching analysis can be performed, like erp's or spectrograms.
 """
 import obspy as ob
 import pandas as pd
@@ -10,6 +12,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def mark_events(channels, ch_names):
+    """Plots raw signal with event markers on top.
+    """
+
     
     for name in ch_names:
         fig, axes = plt.subplots(1,1)
@@ -19,7 +24,6 @@ def mark_events(channels, ch_names):
         
         for idx, row in channels["events"].iterrows():
             axes.axvline(idx, color='r', linestyle='--')
-            #print(row.index)
             
     
 def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
@@ -37,7 +41,7 @@ def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
     return electrode_slices
     
 def Make_Slices_Groups(data, events, n_samples_back, n_samples_forth):
-    """Loads signal and events and creates a list of np.arrays per event type
+    """Creates a dict of epochs (np.arrays) per event type
     
         Parameters
         ----------
@@ -45,13 +49,13 @@ def Make_Slices_Groups(data, events, n_samples_back, n_samples_forth):
             whole EEG signal
         events: DataFrame
             Timestamps and description of events
-        n_samples_back, n_samples_forth: (int, int)
-            window size around time of event
+        n_samples_back, n_samples_forth: (dict, dict)
+            Key is event name, item is window size around time of event
         
         Returns
         -------
-        grouped slices: list(np.arra)
-            list of arrays, one per event type
+        grouped slices: dict
+            Keys are event names, items are epochs (np.arrays)
         
     """
 
