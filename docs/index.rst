@@ -17,7 +17,7 @@ API
    ReadData
    pyseries/ReadData
    pyseries.Preprocess
-   pyseries.Analyze
+   Analyze
 
 Examples
 ^^^^^^^^
