@@ -5,4 +5,4 @@ Analysis
    :maxdepth: 3
 
    autodocs/Explore
-   autodocs.Anova
+   autodocs/Anova
