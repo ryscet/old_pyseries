@@ -19,8 +19,8 @@ API
 Examples
 ^^^^^^^^
 .. toctree::
-	Tutorials/PCA_filtering_tutorial/PCA_filtering_tutorial
-	Tutorials/ANOVA_tutorial/ANOVA_tutorial
+	Preprocess
+
 
 Installation
 ^^^^^^^^^^^^
