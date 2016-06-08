@@ -48,31 +48,31 @@ if on_rtd:
     for mod_name in MOCK_MODULES:
         sys.modules[mod_name] = mock.Mock()
 
-# Add any paths that contain templates here, relative to this directory.
+    # Add any paths that contain templates here, relative to this directory.
+
+    html_theme = 'bootstrap'
+    html_theme_path = ['themes']
+
+    html_theme_options = {
+        # Global TOC depth for "site" navbar tab. (Default: 1)
+        # Switching to -1 shows all levels.
+        'globaltoc_depth': 2,
+
+        # HTML navbar class (Default: "navbar") to attach to <div> element.
+        # For black navbar, do "navbar navbar-inverse"
+        #'navbar_class': "navbar navbar-inverse",
+
+        # Bootswatch (http://bootswatch.com/) theme.
+        'bootswatch_theme': 'spacelab',
+        #
+        # Options are nothing with "" (default) or the name of a valid theme
+        # such as "amelia" or "cosmo".
+        #
+        # Note that this is served off CDN, so won't be available offline.
+        #'bootswatch_theme': "spacelab",
+
+    }
 templates_path = ['_templates']
-
-html_theme = 'bootstrap'
-html_theme_path = ['themes']
-
-html_theme_options = {
-    # Global TOC depth for "site" navbar tab. (Default: 1)
-    # Switching to -1 shows all levels.
-    'globaltoc_depth': 2,
-
-    # HTML navbar class (Default: "navbar") to attach to <div> element.
-    # For black navbar, do "navbar navbar-inverse"
-    #'navbar_class': "navbar navbar-inverse",
-
-    # Bootswatch (http://bootswatch.com/) theme.
-    'bootswatch_theme': 'spacelab',
-    #
-    # Options are nothing with "" (default) or the name of a valid theme
-    # such as "amelia" or "cosmo".
-    #
-    # Note that this is served off CDN, so won't be available offline.
-    #'bootswatch_theme': "spacelab",
-
-}
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
