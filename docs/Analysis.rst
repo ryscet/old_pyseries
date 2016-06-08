@@ -4,7 +4,7 @@ Analysis
 ========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
 
-.. automodule:: pyseries.Analysis.Anova
+.. automodule:: pyseries.Analysis
    :members:
