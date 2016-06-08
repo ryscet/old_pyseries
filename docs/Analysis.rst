@@ -8,5 +8,6 @@ Analysis
 
 .. automodule:: pyseries.Analysis.Anova
    :members:
+   
 .. automodule:: pyseries.Analysis.Explore
    :members:
