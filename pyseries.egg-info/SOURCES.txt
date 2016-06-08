@@ -8,12 +8,15 @@ pyseries.egg-info/requires.txt
 pyseries.egg-info/top_level.txt
 pyseries/Analysis/Anova.py
 pyseries/Analysis/CrossCorrelate.py
+pyseries/Analysis/Explore.py
 pyseries/Analysis/Normalize.py
 pyseries/Analysis/Trends.py
 pyseries/Analysis/__init__.py
 pyseries/Analysis/example.py
-pyseries/LoadingData/ReadData.py
 pyseries/LoadingData/Read_edf.py
+pyseries/LoadingData/Read_mat.py
 pyseries/LoadingData/__init__.py
+pyseries/Preprocessing/ArtifactRemoval.py
+pyseries/Preprocessing/MakeSlices.py
 pyseries/Preprocessing/PrepareData.py
 pyseries/Preprocessing/__init__.py

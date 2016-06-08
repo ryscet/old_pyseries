@@ -4,7 +4,5 @@
 
 """
 
-from . import Analysis
-from . import LoadingData
-from . import Preprocessing
-from . import Pipelines
+from . import AnalyzeRest
+from . import AnalyzeSsvep
