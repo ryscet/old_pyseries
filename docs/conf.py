@@ -52,7 +52,7 @@ if on_rtd:
     # Add any paths that contain templates here, relative to this directory.
 
     html_theme = 'bootstrap'
-    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+    html_theme_path = sys.modules['sphinx_bootstrap_theme'].get_html_theme_path()
 
     html_theme_path = ['themes']
 
