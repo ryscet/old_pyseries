@@ -12,10 +12,10 @@ This package is an initial release. Testing in progress
 
 API
 ^^^
-.. toctree::
-   :maxdepth: 2
-   
+.. toctree::   
    pyseries.ReadData
+   ReadData
+   pyseries/ReadData
    pyseries.Preprocess
    pyseries.Analyze
 
