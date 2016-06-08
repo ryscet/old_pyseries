@@ -13,10 +13,8 @@ This package is an initial release. Testing in progress
 API
 ^^^
 .. toctree::   
-   pyseries.ReadData
    ReadData
-   pyseries/ReadData
-   pyseries.Preprocess
+   Preprocess
    Analyze
 
 Examples
