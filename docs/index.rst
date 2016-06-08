@@ -13,7 +13,6 @@ This package is an initial release. Testing in progress
 API
 ^^^
 .. toctree::   
-   ReadData
    Preprocess
    Analyze
 
