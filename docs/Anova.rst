@@ -1,6 +1,4 @@
 
-Anova
-=====
 .. toctree::
    :maxdepth: 1
 
