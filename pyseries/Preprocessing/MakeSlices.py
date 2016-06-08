@@ -28,7 +28,7 @@ def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
     electrode_slices = {}
     
     for name in ch_names:
-        filtered = ob.signal.filter..bandpass(channels[name], 2, 30, df = 500)
+        filtered = ob.signal.filter.bandpass(channels[name], 2, 30, df = 500)
         
         
         time_series =pd.Series(np.array(filtered, dtype = 'float32'), index = channels['timestamp'] )
