@@ -14,9 +14,10 @@ import numpy as np
 
 def PlotPowerSpectrum(electrode_slices):
     sns.set()
+    sns.set_palette("hls")
     fig, axes = plt.subplots(1)
     for name, event in electrode_slices.items():
-        f, Pxx_den = signal.welch(event, 500, nperseg=32)
+        f, Pxx_den = signal.welch(event, 500, nperseg=256)
         #avg_Pxx = np.mean(Pxx_den, axis = 0)        
         
         if('condtions_Pxx' not in locals()):
@@ -24,14 +25,14 @@ def PlotPowerSpectrum(electrode_slices):
         else:
             condtions_Pxx = np.dstack((condtions_Pxx, Pxx_den))       
     
-    sns.tsplot(data=condtions_Pxx, time = f,  err_style="unit_traces", condition = [key for key in electrode_slices.keys()], ax = axes)
+    sns.tsplot(data=condtions_Pxx[:, 0:20, :], time = f[0:20],  err_style="unit_traces", condition = [key for key in electrode_slices.keys()], ax = axes)
                      
     axes.set_yticklabels(labels = f, rotation = 0)
     
     axes.set_ylabel('Welch Power Density')
     axes.set_xlabel('frequency')
     
-    return condtions_Pxx
+    return f, condtions_Pxx
     
 
     

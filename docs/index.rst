@@ -6,18 +6,18 @@ Welcome to pySeries (pre-alpha stage) documentation!
 
 Overwiev
 ^^^^^^^^
-pySeries is a package for statistical analysis of EEG time-series data. Developed for neuro- and cognitive-science academics looking for a quick start into EEG data analysis with python. 
+pySeries is a package for statistical analysis of EEG data. Usefull for neuro- and cognitive-science academics looking for a quick start into EEG data analysis with python. 
 
-This package is still before initial release. Work in progress
+This package is an initial release. Testing in progress
 
 API
 ^^^
 .. toctree::
    :maxdepth: 2
    
-   ReadData
-   Preprocess
-   Analyze
+   pyseries.ReadData
+   pyseries.Preprocess
+   pyseries.Analyze
 
 Examples
 ^^^^^^^^
@@ -28,13 +28,9 @@ Examples
 Installation
 ^^^^^^^^^^^^
 
-On linux and osx you can install using `pip <https://pypi.python.org/pypi/pySeries>`_:
+You can install using `pip <https://pypi.python.org/pypi/pySeries>`_:
 
 >>> sudo pip install pyseries
-
-On windows download from:
-https://pypi.python.org/pypi/pySeries
-
 
 
 todo 
