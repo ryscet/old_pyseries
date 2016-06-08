@@ -34,6 +34,7 @@ import mock
 sys.path.insert(0, os.path.abspath('..'))
 
 extensions = [
+    'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',

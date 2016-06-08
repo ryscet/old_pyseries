@@ -1,4 +1,4 @@
-Welcome to pySeries (pre-alpha stage) documentation!
+Welcome to pySeries documentation!
 ====================================================
 
 .. image:: images/logo.jpg
