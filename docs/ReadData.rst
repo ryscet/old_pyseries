@@ -3,5 +3,5 @@
 .. toctree::
    :maxdepth: 3
 
-.. automodule:: LoadingData.ReadData
+.. automodule:: pyseries.LoadingData.Read_edf
    :members:
