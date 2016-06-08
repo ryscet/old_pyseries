@@ -4,4 +4,5 @@
 
 """
 
-from . import pyseries
+from . import AnalyzeRest
+from . import AnalyzeSsvep

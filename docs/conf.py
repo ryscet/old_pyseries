@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# pySeries documentation build configuration file, created by
+# pyseries documentation build configuration file, created by
 # sphinx-quickstart on Mon Mar 14 16:17:27 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -134,8 +134,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../..'))
-sys.path.insert(0,"/Users/ryszardcetnarski/old_pyseries/pyseries")
-sys.path.insert(0,"/Users/ryszardcetnarski/old_pyseries")
+sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries/')
 
 # -- General configuration ------------------------------------------------
 
@@ -167,7 +166,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'pySeries'
+project = 'pyseries'
 copyright = '2016, Ryszard Cetnarski'
 author = 'Ryszard Cetnarski'
 
@@ -242,7 +241,7 @@ todo_include_todos = True
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
-#html_title = 'pySeries v1'
+#html_title = 'pyseries v1'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -324,7 +323,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pySeriesdoc'
+htmlhelp_basename = 'pyseriesdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -334,7 +333,7 @@ htmlhelp_basename = 'pySeriesdoc'
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pySeries.tex', 'pySeries Documentation',
+    (master_doc, 'pyseries.tex', 'pyseries Documentation',
      'Ryszard Cetnarski', 'manual'),
 ]
 
@@ -364,7 +363,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pyseries', 'pySeries Documentation',
+    (master_doc, 'pyseries', 'pyseries Documentation',
      [author], 1)
 ]
 
@@ -378,8 +377,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pySeries', 'pySeries Documentation',
-     author, 'pySeries', 'One line description of project.',
+    (master_doc, 'pyseries', 'pyseries Documentation',
+     author, 'pyseries', 'One line description of project.',
      'Miscellaneous'),
 ]
 

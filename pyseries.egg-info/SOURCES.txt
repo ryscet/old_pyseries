@@ -16,6 +16,9 @@ pyseries/Analysis/example.py
 pyseries/LoadingData/Read_edf.py
 pyseries/LoadingData/Read_mat.py
 pyseries/LoadingData/__init__.py
+pyseries/Pipelines/AnalyzeRest.py
+pyseries/Pipelines/AnalyzeSsvep.py
+pyseries/Pipelines/__init__.py
 pyseries/Preprocessing/ArtifactRemoval.py
 pyseries/Preprocessing/MakeSlices.py
 pyseries/Preprocessing/PrepareData.py
