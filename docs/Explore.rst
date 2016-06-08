@@ -1,6 +1,4 @@
 
-Explore
-=======
 .. toctree::
    :maxdepth: 1
 
