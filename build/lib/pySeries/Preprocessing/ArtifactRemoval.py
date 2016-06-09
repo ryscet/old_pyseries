@@ -1,23 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jun  7 11:43:05 2016
-
-@author: user
+ArtifactRemoval
+===============
+Initial filtering. Artifacts:
+	* EOG
+	* ECG
+	* power line
 """
 
-import sys
-sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries/pyseries')
 
-#import LoadingData as loading
-#import Pipelines as pipes
-import obspy.signal.filter as filters
-#import matplotlib.pyplot as plt
-
-
+import obspy.signal.filter as ob
 
 
 def band_pass(sig, min_freq, max_freq):
-    filtered = filters.bandpass(sig,min_freq, max_freq, df = 500)
+    """Plain bandpass
+
+    Parameters
+    ----------
+    sig: np.array
+        whole EEG signal (single channel)
+    min_freq, max_freq: (int, int)
+        lower and upper bound of bandpass filter.
+
+    Returns
+    -------
+    filtered: nparray
+    	filtered signal between min_freq, max_freq, default sampling rate is 500 hz
+
+    """
+    filtered = ob.bandpass(sig,min_freq, max_freq, df = 500)
     return filtered
 #    ssvep_fast = loading.Read_edf.Combine_EDF_XML('/Users/user/Desktop/Nagrania/ssvep_count/Rysiek_03_06/')
  #   p3_ssvep = filters.bandpass(ssvep_fast['EEG P3'], 2, 30, df = 500)

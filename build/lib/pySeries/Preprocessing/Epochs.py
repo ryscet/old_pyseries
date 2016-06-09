@@ -1,34 +1,38 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jun  2 11:20:45 2016
+MakeSlices
+==========
 
-@author: user
+Making epochs (i.e slicing the signal) around events. 
+After epoching analysis can be performed, like erp's or spectrograms.
 """
-import obspy.signal.filter as filters
+import obspy as ob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
 def mark_events(channels, ch_names):
+    """Plots raw signal with event markers on top.
+    """
+
     
     for name in ch_names:
         fig, axes = plt.subplots(1,1)
         
-        sig  = filters.bandpass(channels["EEG O1"], 2, 30, df = 500)
+        sig  = ob.signal.filter.bandpass(channels[name], 2, 30, df = 500)
         axes.plot(channels["timestamp"], sig)
         
         for idx, row in channels["events"].iterrows():
             axes.axvline(idx, color='r', linestyle='--')
-            #print(row.index)
             
     
-def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
+def Make_Epochs_for_Channels(channels, ch_names,n_samples_back, n_samples_forth):
     events = channels["events"]
     
     electrode_slices = {}
     
     for name in ch_names:
-        filtered = filters.bandpass(channels[name], 2, 30, df = 500)
+        filtered = ob.signal.filter.bandpass(channels[name], 2, 30, df = 500)
         
         
         time_series =pd.Series(np.array(filtered, dtype = 'float32'), index = channels['timestamp'] )
@@ -37,21 +41,21 @@ def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
     return electrode_slices
     
 def Make_Slices_Groups(data, events, n_samples_back, n_samples_forth):
-    """Loads signal and events and creates a list of np.arrays per event type
+    """Creates a dict of epochs (np.arrays) per event type
     
-        Parameters
-        ----------
-        data: np.array
-            whole EEG signal
-        events: DataFrame
-            Timestamps and description of events
-        n_samples_back, n_samples_forth: (int, int)
-            window size around time of event
-        
-        Returns
-        -------
-        grouped slices: list(np.arra)
-            list of arrays, one per event type
+    Parameters
+    ----------
+    data: np.array
+        whole EEG signal
+    events: DataFrame
+        Timestamps and description of events
+    n_samples_back, n_samples_forth: (dict, dict)
+        Key is event name, item is window size around time of event
+    
+    Returns
+    -------
+    grouped slices: dict
+        Keys are event names, items are epochs (np.arrays)
         
     """
 
@@ -72,7 +76,6 @@ def Cut_Slices_From_Signal(_signal, events, n_samples_back, n_samples_forth):
     for idx, timestamp in enumerate(events.index):
         #Finding first index greater than event timestamp produces more error than finding the closest data timestamp regrdless of whether it is larger or smaller than event.
         event_index = Find_Closest_Sample(_signal,timestamp)
-        print('event index: %i'%event_index)
         #TODO check how inclusion/exclusion of lower and iupper bounds might affect the seslected slice size
         slices[idx,:] = _signal.iloc[event_index - n_samples_back[e_name] : event_index + n_samples_forth[e_name]]
     

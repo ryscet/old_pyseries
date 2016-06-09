@@ -1,8 +1,14 @@
-# -*- coding: utf-8 -*-
 """
-Created on Wed Jun  8 10:48:03 2016
+Explore
+=======
 
-@author: user
+Plots for common EEG analysis methods
+   * Event related potentials (ERP's)
+    * Welch power spectrum
+    * Spectrogram 
+
+Requires the signal to be epoched by Preprocessing.MakeSlices method.
+Epochs are grouped and colored by conditions.
 """
 
 import seaborn as sns
@@ -13,6 +19,20 @@ import numpy as np
 
 
 def PlotPowerSpectrum(electrode_slices):
+    """Plot average and individual traces of power spectrum for signal epochs. 
+
+    Parameters
+    ----------
+    electrode_slices: dict
+        Key is a condition label, contains array of signal epochs.
+
+    Returns
+    -------
+    f: np.array
+        list of frequency bins.
+    conditions_Pxx: np.array
+        Power spectrum for each epoch x condition.
+    """
     sns.set()
     sns.set_palette("hls")
     fig, axes = plt.subplots(1)
@@ -37,6 +57,15 @@ def PlotPowerSpectrum(electrode_slices):
 
     
 def PlotErp(electrode_slices, n_back):
+    """Plot average and individual traces of epoched signal per condition. 
+
+    Parameters
+    ----------
+    electrode_slices: dict
+        Key is a condition label, contains array of signal epochs.
+    n_back: int
+        information about the time of event from the end of the epoch.
+    """
     sns.set()
     fig, axes = plt.subplots(1)
     #event_avg = []
@@ -51,7 +80,18 @@ def PlotErp(electrode_slices, n_back):
     axes.axvline(n_back, color='r', linestyle='--')       
     
 def PlotSpectrogram(electrode_slices, n_back, n_forth):
-    
+    """Plot average spectrogram (time by frequency). 
+       Uses n_back and n_forth to approximate the time bin where event occured.
+
+    Parameters
+    ----------
+    electrode_slices: dict
+        Key is a condition label, contains array of signal epochs.
+    n_back: int
+        information about the time of event from the end of the epoch.
+    n_forth: int
+        information about the time of event from the begining of the epoch.
+    """
     sns.set()
     fig, axes = plt.subplots(2,2)
     i = 0

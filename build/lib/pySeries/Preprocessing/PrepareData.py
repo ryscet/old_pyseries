@@ -20,7 +20,7 @@ from sklearn.cluster import KMeans
 import matplotlib.cm as cm
 import pandas as pd
 #import LoadingData.ReadData as rd
-import obspy.signal.filter as filters
+import obspy.signal.filter as ob
 import pickle
 from scipy import signal
 
@@ -93,7 +93,7 @@ def ExtractBandEnvelope(data, bands):
 
         #f, axes = plt.subplots(4, sharex=True, sharey=True)
         filt = FilterData(data, band_range[0], band_range[1])
-        envelope = filters.envelope(filt)
+        envelope = ob.envelope(filt)
         bands_results[name]= envelope
 
     return bands_results
@@ -639,6 +639,6 @@ def MahalanobisDist(x, y):
 
 
 def FilterData(channel, _freqmin, _freqmax):
-    b_pass = filters.bandpass(channel, freqmin = _freqmin, freqmax = _freqmax, df = 250)
+    b_pass = ob.bandpass(channel, freqmin = _freqmin, freqmax = _freqmax, df = 250)
    # b_stop =filters.bandstop(b_pass, freqmin = 49 ,freqmax = 51, df = 500)
     return b_pass

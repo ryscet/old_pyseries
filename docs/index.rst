@@ -23,10 +23,10 @@ Examples
 ^^^^^^^^
 .. toctree::
 	
-	Tutorials/Rest_pipeline
-	Tutorials/ssvep_pipeline
-	Tutorials/ANOVA_tutorial
-	Tutorials/PCA_filtering_tutorial
+	Tutorials/Rest_pipeline/Rest_pipeline
+	Tutorials/ssvep_pipeline/ssvep_pipeline
+	Tutorials/ANOVA_tutorial/ANOVA_tutorial
+	Tutorials/PCA_filtering_tutorial/PCA_filtering_tutorial
 
 
 Installation
