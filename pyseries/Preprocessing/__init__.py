@@ -6,4 +6,5 @@
 
 from . import PrepareData
 from . import ArtifactRemoval 
-from . import MakeSlices 
+from . import Epochs
+

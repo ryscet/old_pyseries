@@ -19,6 +19,15 @@ API
    ReadData
 
 
+Examples
+^^^^^^^^
+.. toctree::
+	
+	Tutorials/Rest_pipeline
+	Tutorials/ssvep_pipeline
+	Tutorials/ANOVA_tutorial
+	Tutorials/PCA_filtering_tutorial
+
 
 Installation
 ^^^^^^^^^^^^

@@ -5,4 +5,4 @@ Preprocessing
    :maxdepth: 3
 
    autodocs/ArtifactRemoval
-   autodocs/MakeSlices
+   autodocs/Epochs

@@ -9,7 +9,7 @@ Initial filtering. Artifacts:
 """
 
 
-import obspy as ob
+import obspy.signal.filter as ob
 
 
 def band_pass(sig, min_freq, max_freq):
@@ -28,7 +28,7 @@ def band_pass(sig, min_freq, max_freq):
     	filtered signal between min_freq, max_freq, default sampling rate is 500 hz
 
     """
-    filtered = ob.signal.filter.bandpass(sig,min_freq, max_freq, df = 500)
+    filtered = ob.bandpass(sig,min_freq, max_freq, df = 500)
     return filtered
 #    ssvep_fast = loading.Read_edf.Combine_EDF_XML('/Users/user/Desktop/Nagrania/ssvep_count/Rysiek_03_06/')
  #   p3_ssvep = filters.bandpass(ssvep_fast['EEG P3'], 2, 30, df = 500)

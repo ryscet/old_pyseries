@@ -26,7 +26,7 @@ def mark_events(channels, ch_names):
             axes.axvline(idx, color='r', linestyle='--')
             
     
-def Make_Slices_for_Channel(channels, ch_names,n_samples_back, n_samples_forth):
+def Make_Epochs_for_Channels(channels, ch_names,n_samples_back, n_samples_forth):
     events = channels["events"]
     
     electrode_slices = {}
