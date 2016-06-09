@@ -1,4 +1,5 @@
-
+Rest_Pipeline
+-------------
 .. code:: python
 
     # Notebook settings (i.e. this thing settings) 
