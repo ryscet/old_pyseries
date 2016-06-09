@@ -1,5 +1,4 @@
-Rest_Pipeline
--------------
+
 .. code:: python
 
     # Notebook settings (i.e. this thing settings) 
@@ -44,7 +43,8 @@ Rest_Pipeline
     
     n_samples_back = {"Eyes Open": 0, "Eyes Closed": 0}
     n_samples_forth = {"Eyes Open":  500* 140, "Eyes Closed":  500* 140}
-
+    
+    slices = prep.Epochs.Make_Epochs_for_Channels(channels, ['EEG O1', 'EEG O2',  'EEG P3', 'EEG C4', 'EEG P4'],n_samples_back, n_samples_forth)
 
 
 .. parsed-literal::
@@ -81,18 +81,8 @@ Rest_Pipeline
     f, pxx = analysis.Explore.PlotPowerSpectrum(slices['EEG O1'])
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-15-1536ed4fba69> in <module>()
-    ----> 1 f, pxx = analysis.Explore.PlotPowerSpectrum(slices['EEG O1'])
-    
-
-    NameError: name 'slices' is not defined
+.. image:: output_5_0.png
 
 
 
