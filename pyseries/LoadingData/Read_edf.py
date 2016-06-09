@@ -47,7 +47,6 @@ def Combine_EDF_XML(path, bandpass_filter):
     freq='2ms' 
 #Assume the longest variable in the .edf must be EEG, so use this length for timestamps
     n_samples = GetMaxLength(signal_dict)
-    print("n samples %i"%n_samples)
 
 #TODO Could also use start_time['DateTime'] - check which is better
     index = pd.date_range(start_time['UNIXTIME'].iloc[0], periods= n_samples, freq = freq)
@@ -95,6 +94,7 @@ def Read_EDF(path):
     
     
     signal_dict = {}
+    print('Channels:')
     for idx, name in enumerate(signal_labels):
         print(name.decode("utf-8"))
         signal_dict[name.decode("utf-8")] = f.readSignal(idx)

@@ -19,7 +19,7 @@ def mark_events(channels, ch_names):
     for name in ch_names:
         fig, axes = plt.subplots(1,1)
         
-        sig  = ob.signal.filter.bandpass(channels["EEG O1"], 2, 30, df = 500)
+        sig  = ob.signal.filter.bandpass(channels[name], 2, 30, df = 500)
         axes.plot(channels["timestamp"], sig)
         
         for idx, row in channels["events"].iterrows():
@@ -76,7 +76,6 @@ def Cut_Slices_From_Signal(_signal, events, n_samples_back, n_samples_forth):
     for idx, timestamp in enumerate(events.index):
         #Finding first index greater than event timestamp produces more error than finding the closest data timestamp regrdless of whether it is larger or smaller than event.
         event_index = Find_Closest_Sample(_signal,timestamp)
-        print('event index: %i'%event_index)
         #TODO check how inclusion/exclusion of lower and iupper bounds might affect the seslected slice size
         slices[idx,:] = _signal.iloc[event_index - n_samples_back[e_name] : event_index + n_samples_forth[e_name]]
     
