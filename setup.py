@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name = "pyseries",
-    version = "1.0.21",
+    version = "1.0.24",
     author = "Ryszard Cetnarski",
     author_email = "cetnarski.ryszard@gmail.com",
     long_description="Developed for analysis of EEG recordings. Targeted for neuro and cognitive science academics looking for a quick start into EEG data analysis with python.", 
