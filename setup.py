@@ -26,6 +26,6 @@ setup(
         "Intended Audience :: Science/Research"
     ],
     packages=setuptools.find_packages(exclude=['contrib', 'docs', 'tests*']),
-    install_requires=['numpy', 'pandas', 'scipy', 'sklearn', 'matplotlib', 'seaborn', 'deepdish', 'obspy', 'tabulate'],
+    install_requires=['numpy', 'pandas', 'scipy', 'sklearn', 'matplotlib', 'seaborn', 'deepdish', 'obspy', 'tabulate', 'pyedflib' ],
 
 )
