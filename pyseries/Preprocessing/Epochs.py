@@ -10,6 +10,9 @@ import obspy as ob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import OrderedDict
+
+
 
 def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
     """Epochs are pieces of signal which happened right after and/or before an event.
@@ -29,8 +32,9 @@ def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
     
     Returns
     -------
-    grouped slices: dict
-        Keys are event names, items are epochs (np.arrays)
+    epochs: dict
+        Epoched signal organized in a dictionary.
+        Keys are event names, values are epochs (np.arrays)
         
         
     Examples
@@ -46,7 +50,7 @@ def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
     Epochs will be created only from events which name match those provided by keys in epochs info dictionary.
     Values in epochs infor dictionary are [n_samples_before, n_samples_forward]         
     
-    >>> epochs_info = {'Eyes Open': [0: 500 * 140], 'Eyes Closed[0: 500 *140]'}         
+    >>> epochs_info = {'Eyes Open': [0: 500 * 140], 'Eyes Closed': [0: 500 *140]}         
     
     Now you can make epochs:
 
@@ -56,16 +60,16 @@ def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
     
     events = recording["events"]
     
-    electrode_slices = {}
+    epochs = {}
     
     for name in ch_names:
         filtered = ob.signal.filter.bandpass(recording[name], 2, 30, df = 500)
         
         
         time_series =pd.Series(np.array(filtered, dtype = 'float32'), index = recording['timestamp'] )
-        electrode_slices[name] = Make_Slices_Groups(time_series, events, epochs_info)
+        epochs[name] = Make_Slices_Groups(time_series, events, epochs_info)
     
-    return electrode_slices
+    return epochs
     
 def Make_Slices_Groups(data, events, epochs_info):
     #Specify useful events by storing them in a dict specifying n_samples back and forth
@@ -98,15 +102,36 @@ def mark_events(recording, ch_names):
     ch_names: list(str)
         List of channels to create epochs from
     """
+    events = recording['events']
+    #get number of event types
+    unique_events =events['code'].unique()
+    #Choose colormap
+    colormap = plt.cm.Paired # gist_ncar #nipy_spectral, Set1,Paired   
+    colors = [colormap(i) for i in np.linspace(0, 1,len(unique_events))]
     
+    color_dict =  {name: colors[i] for i, name in enumerate(unique_events)}
+    
+    
+         
     for name in ch_names:
         fig, axes = plt.subplots(1,1)
+        fig.suptitle(name, fontweight = 'bold')
         
         sig  = ob.signal.filter.bandpass(recording[name], 2, 30, df = 500)
-        axes.plot(recording["timestamp"], sig)
+        axes.plot(recording["timestamp"], sig, 'cornflowerblue')
         
+        
+        ymin, ymax = axes.get_ylim()
+         #Pos for annotations
+        ypos = ymax - np.abs(ymin) + np.abs(ymax)/3.0
         for idx, row in recording["events"].iterrows():
-            axes.axvline(idx, color='r', linestyle='--')
+            axes.axvline(idx, linestyle='--',label = row['code'], color = color_dict[row['code']])
+            axes.annotate(row['code'], xy = (idx, ypos), rotation = 90, color = color_dict[row['code']], horizontalalignment='right')            
+        
+        handles, labels = plt.gca().get_legend_handles_labels()
+        by_label = OrderedDict(zip(labels, handles))
+        plt.legend(by_label.values(), by_label.keys())
+
 
 
 def Find_Closest_Sample(signal, event_time):

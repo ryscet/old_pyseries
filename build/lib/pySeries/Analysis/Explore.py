@@ -3,8 +3,8 @@ Explore
 =======
 
 Plots for common EEG analysis methods
-   * Event related potentials (ERP's)
-    * Welch power spectrum
+    * Event related potentials (ERP's)
+    * Periodogram and Welch power spectrum
     * Spectrogram 
 
 Requires the signal to be epoched by Preprocessing.MakeSlices method.
@@ -18,41 +18,50 @@ import numpy as np
 
 
 
-def PlotPowerSpectrum(electrode_slices):
+def PlotPowerSpectrum(electrode_slices, exact_sr, mode = 'period'):
     """Plot average and individual traces of power spectrum for signal epochs. 
 
     Parameters
-    ----------
+    ---------- 
     electrode_slices: dict
-        Key is a condition label, contains array of signal epochs.
+        Key is an event name, values are signal epochs.
+    exact_sr: float
+        exact sampling rate info from the EEG amplifier
+    mode: {'period', 'welch'}
+        Default is period which produces periodogram. 
+        change to 'welch' for alternative method of power estimation.
 
     Returns
     -------
     f: np.array
         list of frequency bins.
-    conditions_Pxx: np.array
+    Pxx_den: np.array
         Power spectrum for each epoch x condition.
+
     """
+    
     sns.set()
     sns.set_palette("hls")
     fig, axes = plt.subplots(1)
+    colors = ['r','g', 'b', 'yellow', 'm', 'orange']
+    color_dict =  {name: colors[i] for i, name in enumerate(electrode_slices.keys())}
+
     for name, event in electrode_slices.items():
-        f, Pxx_den = signal.welch(event, 500, nperseg=256)
-        #avg_Pxx = np.mean(Pxx_den, axis = 0)        
-        
-        if('condtions_Pxx' not in locals()):
-            condtions_Pxx = Pxx_den
-        else:
-            condtions_Pxx = np.dstack((condtions_Pxx, Pxx_den))       
+
+        if(mode=='welch'):
+            f, Pxx_den = signal.welch(event, exact_sr, nperseg=512)
+        elif mode=='period':
+            f, Pxx_den = signal.periodogram(event, exact_sr)
+      
+      
+        sns.tsplot(data=Pxx_den, time = f,  err_style="unit_traces", condition = name, color =color_dict[name], ax = axes)
+
+        axes.set_yticklabels(labels = f, rotation = 0)
+
+        axes.set_ylabel('Welch Power Density')
+        axes.set_xlabel('frequency')
     
-    sns.tsplot(data=condtions_Pxx[:, 0:20, :], time = f[0:20],  err_style="unit_traces", condition = [key for key in electrode_slices.keys()], ax = axes)
-                     
-    axes.set_yticklabels(labels = f, rotation = 0)
-    
-    axes.set_ylabel('Welch Power Density')
-    axes.set_xlabel('frequency')
-    
-    return f, condtions_Pxx
+    return f, Pxx_den
     
 
     

@@ -4,8 +4,8 @@ Created on Wed Jun  8 11:21:35 2016
 
 @author: user
 """
-#import sys
-#sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries/')
+import sys
+sys.path.insert(0, '/Users/user/Desktop/repo_for_pyseries/pyseries')
 
 import pyseries.LoadingData as loading
 import pyseries.Preprocessing as prep
@@ -16,6 +16,11 @@ import numpy as np
 from scipy import stats
 
 
+#path = '/Users/user/Desktop/eeg/ssvep/Blazej 13.06.16/'
+#channels = loading.Read_edf.Combine_EDF_XML(path,True)
+prep.Epochs.mark_events(channels,['EEG O2'] )
+
+
 def calc_corr(path):
     channels = loading.Read_edf.Combine_EDF_XML(path,True)
     
@@ -24,12 +29,11 @@ def calc_corr(path):
     #
     
     
-    n_samples_back = {"Please Count": 0, "Only Look": 0}
-    n_samples_forth = {"Please Count": 500 * 10, "Only Look": 500 * 10}
+    epochs_info= {"Please Count": [0, 500*10], "Only Look": [0, 500 *10]}
     
     
     
-    slices = prep.Epochs.Make_Epochs_for_Channels(channels, ['EEG O1','EEG O2','EEG P3', 'EEG P4',  ],n_samples_back, n_samples_forth)
+    slices = prep.Epochs.Make_Epochs_for_Channels(channels, ['EEG O1','EEG O2','EEG P3', 'EEG P4',  ],epochs_info)
     
     new_ref = {}
     new_ref['Only Look'] = slices['EEG O1']['Only Look'] - slices['EEG P3']['Only Look']

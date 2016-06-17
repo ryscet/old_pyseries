@@ -7,3 +7,4 @@ seaborn
 deepdish
 obspy
 tabulate
+pyedflib
