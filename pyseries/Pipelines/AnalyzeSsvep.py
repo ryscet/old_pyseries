@@ -17,14 +17,14 @@ from scipy import stats
 
 
 #path = '/Users/user/Desktop/eeg/ssvep/Blazej 13.06.16/'
-#channels = loading.Read_edf.Combine_EDF_XML(path,True)
-prep.Epochs.mark_events(channels,['EEG O2'] )
+#epochs = loading.Read_edf.Combine_EDF_XML(path,True)
+#prep.Epochs.mark_events(epochs,['EEG O2'] )
 
 
 def calc_corr(path):
-    channels = loading.Read_edf.Combine_EDF_XML(path,True)
+    epochs = loading.Read_edf.Combine_EDF_XML(path,True)
     
-    #prep.Epochs.mark_events(channels, ['S1', 'S2'])
+    #prep.Epochs.mark_events(epochs, ['S1', 'S2'])
     
     #
     
@@ -33,7 +33,7 @@ def calc_corr(path):
     
     
     
-    slices = prep.Epochs.Make_Epochs_for_Channels(channels, ['EEG O1','EEG O2','EEG P3', 'EEG P4',  ],epochs_info)
+    slices = prep.Epochs.Make_Epochs_for_Channels(epochs, ['EEG O1','EEG O2','EEG P3', 'EEG P4',  ],epochs_info)
     
     new_ref = {}
     new_ref['Only Look'] = slices['EEG O1']['Only Look'] - slices['EEG P3']['Only Look']
@@ -41,7 +41,7 @@ def calc_corr(path):
     new_slices = {"O-P":new_ref}
     
     
-    responses = channels['events'][channels['events']["code"] == "responded"]
+    responses = epochs['events'][epochs['events']["code"] == "responded"]
     accuracy = responses['tmp'] / responses['tmp2']
     
     
