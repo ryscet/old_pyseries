@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-ArtifactRemoval
-===============
+Epochs
+======
 Initial filtering. Artifacts:
     * EOG
     * ECG
@@ -13,7 +13,7 @@ import obspy.signal.filter as ob
 
 
 def band_pass(sig, min_freq, max_freq):
-    """Plain bandpass
+    """Plain bandpass yoyoyyo
 
     Parameters
     ----------
