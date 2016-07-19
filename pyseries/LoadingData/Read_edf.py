@@ -26,7 +26,7 @@ import pyseries.Preprocessing.ArtifactRemoval as ar
 
 #TODO Make an organized/relative paths way of maintaining database
 #path = '/Users/user/Desktop/Nagrania/rest/Rysiek_03_06/'
-def Combine_EDF_XML(path, bandpass_filter):
+def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
     """Extracts EEG channels data from edf and creates a new channel with timestamps. 
          
          Returns
@@ -36,31 +36,19 @@ def Combine_EDF_XML(path, bandpass_filter):
     
     """
     signal_dict = Read_EDF(path + "sygnal.edf")
-    start_time = Read_XML(path + "digi_log.xml")
 
-    if(bandpass_filter == True):
-        for chan_name, sig in signal_dict.items():
-            signal_dict[chan_name] = ar.band_pass(sig, 2,30)
+    for chan_name, sig in signal_dict.items():
+        #signal_dict[chan_name] = ar.band_pass(sig, freq_min,freq_max)
+        signal_dict[chan_name] = sig
 
     
-    #freq = 1000ms / 500 i.e. how much time between each sample
-    freq='2ms' 
-#Assume the longest variable in the .edf must be EEG, so use this length for timestamps
-    n_samples = GetMaxLength(signal_dict)
-
-#TODO Could also use start_time['DateTime'] - check which is better
-    index = pd.date_range(start_time['UNIXTIME'].iloc[0], periods= n_samples, freq = freq)
-    
-    signal_dict['timestamp'] = index
-
-
     log = pd.read_csv(path + 'unity_log.csv',parse_dates = True, index_col = 0, skiprows = 1, skipfooter = 1, engine='python')
     
     signal_dict['events'] = log
-
-    e_ts = exact_timestamp(path, n_samples)
+#Get the timestamp based on the info from the exact_timestamp field in the .1 file
+    e_ts = exact_timestamp(path, GetMaxLength(signal_dict))
 #TODO decide which timestamp is correct
-    signal_dict['exact_timestamp'] = e_ts
+    signal_dict['timestamp'] = e_ts
 
     
     return signal_dict
@@ -143,19 +131,19 @@ def Read_XML(path):
     
 
 def exact_timestamp(path, n_samples):
-
-    #1000.0/Get_Exact_Sampling_rate(path)*1000 *1000
+    #Convert to nanoseconds by multiplying to desired resolution and cutting the reminding decimal places using int(). *time units change by order of 10^3
+    eaxct_sr_ns = int(1000.0/Get_Exact_Sampling_rate(path)*10**3 *10**3)
    # freq = '2008147ns'
     timestamp = np.empty(n_samples, dtype='datetime64[ns]')
     timestamp[0] =Read_XML(path + 'digi_log.xml')['DateTime'].iloc[0]
     for i in range(n_samples - 1):
-        timestamp[i+1] = timestamp[i] + np.timedelta64(2008147, 'ns')
+        timestamp[i+1] = timestamp[i] + np.timedelta64(eaxct_sr_ns, 'ns')
 
     return timestamp
     
 
 def Get_Exact_Sampling_rate(path):
-    
+    #Read the bytes from .1 file
     with open(path + 'digi_binary.1', "rb") as binary_file:
          #Seek position and read N bytes
         binary_file.seek((490+(89*32)))  # Go to bite nr

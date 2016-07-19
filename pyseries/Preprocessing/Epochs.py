@@ -92,7 +92,7 @@ def Cut_Slices_From_Signal(_signal, events, epoch_info):
     
     return slices
 
-def mark_events(recording, ch_names):
+def mark_events(recording, ch_names, subject_name = ''):
     """Plots raw signal with event markers on top.
     
     Parameters
@@ -113,11 +113,11 @@ def mark_events(recording, ch_names):
     
     
          
-    for name in ch_names:
+    for electrode_name in ch_names:
         fig, axes = plt.subplots(1,1)
-        fig.suptitle(name, fontweight = 'bold')
+        fig.suptitle(electrode_name + ' ' + subject_name, fontweight = 'bold')
         
-        sig  = ob.signal.filter.bandpass(recording[name], 2, 30, df = 500)
+        sig  = ob.signal.filter.bandpass(recording[electrode_name], 2, 30, df = 500)
         axes.plot(recording["timestamp"], sig, 'cornflowerblue')
         
         

@@ -22,62 +22,76 @@ from scipy import stats
 
 
 def calc_corr(path):
-    epochs = loading.Read_edf.Combine_EDF_XML(path,True)
-    
-    #prep.Epochs.mark_events(epochs, ['S1', 'S2'])
-    
-    #
-    
-    
+    #Read single subject data - eeg, info about eeg and info from experimental app (unity)
+    recording = loading.Read_edf.Combine_EDF_XML(path, 3, 70)
+    #Display markers over the whole signal    
+    prep.Epochs.mark_events(recording,['EEG O1'], subject_name = path)
+
+    #Define epochs for analysis
     epochs_info= {"Please Count": [0, 500*10], "Only Look": [0, 500 *10]}
-    
-    
-    
-    slices = prep.Epochs.Make_Epochs_for_Channels(epochs, ['EEG O1','EEG O2','EEG P3', 'EEG P4',  ],epochs_info)
-    
+    #Create them by slicing the signal
+    epochs = prep.Epochs.Make_Epochs_for_Channels(recording, ['EEG O1','EEG O2','EEG P3', 'EEG P4'],epochs_info)
+    #Re-reference, because only by subtracting P from O-electrodes ssvep response becomes visible
     new_ref = {}
-    new_ref['Only Look'] = slices['EEG O1']['Only Look'] - slices['EEG P3']['Only Look']
-    new_ref['Please Count'] = slices['EEG O1']['Please Count'] - slices['EEG P3']['Please Count']
-    new_slices = {"O-P":new_ref}
+    new_ref['Only Look'] = epochs ['EEG O2']['Only Look'] - epochs['EEG P4']['Only Look']
+    new_ref['Please Count'] = epochs ['EEG O2']['Please Count'] - epochs ['EEG P4']['Please Count']
+    new_epochs  = {"O-P":new_ref}
     
+    #Get the accuracy in counting condition
+    responses = recording['events'][recording['events']["code"] == "responded"]
+    accuracy = responses['response'] / responses['expected']
     
-    responses = epochs['events'][epochs['events']["code"] == "responded"]
-    accuracy = responses['tmp'] / responses['tmp2']
+    #Get the power spectra in two conditions       
+    power_density= analysis.Explore.PlotPowerSpectrum(new_epochs['O-P'], 498, mode = 'period', name = path)
     
+    ssvep = analysis.Normalize.Z_score( power_density['Please Count'][1][:,49] )
+    accuracy = analysis.Normalize.Z_score( accuracy )
     
-    
-    f, pxx = analysis.Explore.PlotPowerSpectrum(new_slices['O-P'], 498, 'period')
-    
-    ssvep = pxx[:,50]
-    ssvep = ssvep /max(ssvep)
-    accuracy = accuracy /max(accuracy)
-    
-    return ssvep, accuracy, pxx
+    return ssvep, accuracy, power_density
     
 
-def plot_corr():
-    
-    paths = ['/Users/user/Desktop/eeg/ssvep/Blazej 13.06.16/',
-            '/Users/user/Desktop/eeg/ssvep/Ania_14_06_16/',
-            '/Users/user/Desktop/eeg/ssvep/Karen_14_06_16/',
-            '/Users/user/Desktop/Nagrania/ssvep_count/Agnieszka_03_06/'
+def plot_slow_ssvep():
+    #Slow is 5Hz flicker
+    paths = ['/Users/user/Desktop/nagrania_eeg/ssvep/Blazej 13.06.16/',
+            '/Users/user/Desktop/nagrania_eeg/ssvep/Ania_14_06_16/',
+            '/Users/user/Desktop/nagrania_eeg/ssvep/Karen_14_06_16/',
+            '/Users/user/Desktop/nagrania_eeg/ssvep/Agnieszka_03_06/',
+            '/Users/user/Desktop/nagrania_eeg/ssvep/Kuba_14_06_16/',
+            '/Users/user/Desktop/nagrania_eeg/ssvep/Rysiek_03_06/'
             ]
 
     all_ssvep = []
     all_acc = []
+    
+    saving = {}
     for p in paths:
         ssvep, acc, pxx = calc_corr(p)
         all_ssvep.extend(ssvep)
         all_acc.extend(acc)
+        
+        saving[p] = ssvep
     
-    plt.plot(all_ssvep, all_acc)    
-    fig, axes = plt.subplots(1)
-    print(r2(all_ssvep, all_acc))
-    #sns.jointplot(x = all_ssvep,y =  all_acc, kind="reg")
+    sns.jointplot(x = np.array(all_ssvep),y =  np.array(all_acc), kind="reg")
+    return saving
 
+def plot_fast_ssvep():
+    #fast is 20 Hz flicker
+    paths = ['/Users/user/Desktop/Nagrania/ssvep_20hz/Agnieszka_03_06/', 
+             '/Users/user/Desktop/Nagrania/ssvep_20hz/Rysiek_03_06/']
 
-def r2(x, y):
-    return stats.pearsonr(x, y)
-#
-#
-#  
+    for path in paths:
+    
+        #Read single subject data - eeg, info about eeg and info from experimental app (unity)
+        recording = loading.Read_edf.Combine_EDF_XML(path, 0, 70)
+        #Define epochs for analysis
+        epochs_info= {"Only Look": [0, 500 *10]}
+        #Create them by slicing the signal
+        epochs = prep.Epochs.Make_Epochs_for_Channels(recording, ['EEG O1','EEG O2','EEG P3','EEG P4'],epochs_info)
+        #Re-reference, because oonly then ssvep response becomes visible
+        new_ref = {}
+        new_ref['Only Look'] = epochs ['EEG O2']['Only Look'] - epochs['EEG P4']['Only Look']
+        new_epochs  = {"O-P":new_ref}
+                
+        #Get the power spectra in two conditions       
+        power_density= analysis.Explore.PlotPowerSpectrum(new_epochs['O-P'], 498, mode = 'period', name = path)
+    

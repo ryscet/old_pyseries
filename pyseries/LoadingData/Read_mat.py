@@ -70,15 +70,28 @@ def Load_Rest_Signal(filtering_var):
 
 
     for name, subject in all_subjects.items():
-        selected_electrodes ={'F3' : subject[ch_idx[0], :],
+        
+        selected_electrodes = {
+        
+        'F3' : subject[ch_idx[0], :],
         'F4' : subject[ch_idx[1], :],
         'P3' : subject[ch_idx[2], :],
-        'P4' : subject[ch_idx[3], :]}
+        'P4' : subject[ch_idx[3], :]
+        
+        }
 
         all_subjects[name] = selected_electrodes
 
 
     return all_subjects
+    
+def Load_Training_Signal(filtering_var):
+    in_path = '/Users/user/Desktop/Analysis projects/treningi_mat/'
+    
+    all_subjects = mat2py_read(in_path = in_path, filtering_var = filtering_var, reshape = True)
+    
+    return all_subjects
+
 
 
 def mat2py_read(in_path = '', filtering_var = '', reshape = False):
@@ -118,9 +131,9 @@ def mat2py_read(in_path = '', filtering_var = '', reshape = False):
     all_timeseries = {}
     #Enumerate instead of a simple for loop just to give information how many files are left
     for idx, name in enumerate(full_paths):
-
+        print(name)
         #Load the matlab variable
-        matVar = sio.loadmat(name)
+        matVar = c
         #extract just the variable (i.e. drop metadata) which is USUALLY undder the only key without '__' prefix (and thus always comes up last in a sorted list)
         pyVar = matVar[sorted(matVar.keys())[-1]]#.swapaxes(0,2).swapaxes(1,2)
 
@@ -138,6 +151,64 @@ def mat2py_read(in_path = '', filtering_var = '', reshape = False):
 
     #SaveHDF(all_timeseries, 'all_trainings')
     return all_timeseries
+
+
+
+def SaveHDF(var, name, out_path):
+    """Saves dictionary of numpy arrays to HDF5 using deepdish library.
+
+    Parameters
+    ----------
+    var: any
+        variable to save.
+    name: str
+        Name to save the `var` on the disk. Usually the same as variable name.
+    out_path: str
+        path to save the HDF5 files.
+
+    """
+
+    dd.io.save(out_path + name+'.h5', var, compression=None)
+    
+    
+
+def LoadFreqInfo(min_freq,max_freq):
+    """Provide indexes for fft data, to limit it to certain range
+
+       Indexes are not identical to frequency in fft data. More or less index = (frequency / 2) + 1
+
+       Parameters
+       ----------
+       min_freq: int
+           lower frequency bound to limit the fft power spectrum
+
+       max_freq: int
+           upper frequency bound to limit the fft power spectrum
+
+       Returns
+       -------
+       list: [min_idx, max_idx]
+           indexes in fft corresponding to frequency bounds defined by `min_freq`, `max_freq`
+
+       Notes
+       -----
+       LoadFreInfo() assumes all fft's were computed with the same parameters, thus have the same freq to index relation
+    """
+
+#TODO check whats up with the overlapping subjects from tura 2 and 3, repeat when normalization amplitude methds are finally decided (divide by sum/mean, take sum/mean)
+    path = '/Users/ryszardcetnarski/Desktop/Nencki/Badanie_NFB/Dane/fft_treningi/'
+
+
+    #Load only a single file, does not matter each one as all fft's were computed with the same parameters so contain the same frequency to index relation
+    sample_file = glob.glob(path+'*')[0]
+
+    #Get the indexes where the frequencies are in bound of those of interest. Index does not eqal frequency
+    freqs = sio.loadmat(sample_file)['freqs']
+    min_idx = np.where(freqs> min_freq)[0][0]
+    max_idx = np.where(freqs> max_freq)[0][0]
+
+    return [min_idx, max_idx], freqs[min_idx: max_idx]
+    
 
 def LoadAvg(in_path, filter_list, freq_lim = None):
     """Read Data from folder with signals to be averaged.
@@ -184,58 +255,4 @@ def LoadAvg(in_path, filter_list, freq_lim = None):
     return averaged_dict
 
 
-def LoadFreqInfo(min_freq,max_freq):
-    """Provide indexes for fft data, to limit it to certain range
 
-       Indexes are not identical to frequency in fft data. More or less index = (frequency / 2) + 1
-
-       Parameters
-       ----------
-       min_freq: int
-           lower frequency bound to limit the fft power spectrum
-
-       max_freq: int
-           upper frequency bound to limit the fft power spectrum
-
-       Returns
-       -------
-       list: [min_idx, max_idx]
-           indexes in fft corresponding to frequency bounds defined by `min_freq`, `max_freq`
-
-       Notes
-       -----
-       LoadFreInfo() assumes all fft's were computed with the same parameters, thus have the same freq to index relation
-    """
-
-#TODO check whats up with the overlapping subjects from tura 2 and 3, repeat when normalization amplitude methds are finally decided (divide by sum/mean, take sum/mean)
-    path = '/Users/ryszardcetnarski/Desktop/Nencki/Badanie_NFB/Dane/fft_treningi/'
-
-
-    #Load only a single file, does not matter each one as all fft's were computed with the same parameters so contain the same frequency to index relation
-    sample_file = glob.glob(path+'*')[0]
-
-    #Get the indexes where the frequencies are in bound of those of interest. Index does not eqal frequency
-    freqs = sio.loadmat(sample_file)['freqs']
-    min_idx = np.where(freqs> min_freq)[0][0]
-    max_idx = np.where(freqs> max_freq)[0][0]
-
-    return [min_idx, max_idx], freqs[min_idx: max_idx]
-
-
-
-
-def SaveHDF(var, name, out_path):
-    """Saves dictionary of numpy arrays to HDF5 using deepdish library.
-
-    Parameters
-    ----------
-    var: any
-        variable to save.
-    name: str
-        Name to save the `var` on the disk. Usually the same as variable name.
-    out_path: str
-        path to save the HDF5 files.
-
-    """
-
-    dd.io.save(out_path + name+'.h5', var, compression=None)

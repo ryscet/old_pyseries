@@ -70,15 +70,28 @@ def Load_Rest_Signal(filtering_var):
 
 
     for name, subject in all_subjects.items():
-        selected_electrodes ={'F3' : subject[ch_idx[0], :],
+        
+        selected_electrodes = {
+        
+        'F3' : subject[ch_idx[0], :],
         'F4' : subject[ch_idx[1], :],
         'P3' : subject[ch_idx[2], :],
-        'P4' : subject[ch_idx[3], :]}
+        'P4' : subject[ch_idx[3], :]
+        
+        }
 
         all_subjects[name] = selected_electrodes
 
 
     return all_subjects
+    
+def Load_Training_Signal(filtering_var):
+    in_path = '/Users/user/Desktop/Analysis projects/treningi_mat/'
+    
+    all_subjects = mat2py_read(in_path = in_path, filtering_var = filtering_var, reshape = True)
+    
+    return all_subjects
+
 
 
 def mat2py_read(in_path = '', filtering_var = '', reshape = False):
@@ -118,7 +131,7 @@ def mat2py_read(in_path = '', filtering_var = '', reshape = False):
     all_timeseries = {}
     #Enumerate instead of a simple for loop just to give information how many files are left
     for idx, name in enumerate(full_paths):
-
+        print(name)
         #Load the matlab variable
         matVar = sio.loadmat(name)
         #extract just the variable (i.e. drop metadata) which is USUALLY undder the only key without '__' prefix (and thus always comes up last in a sorted list)

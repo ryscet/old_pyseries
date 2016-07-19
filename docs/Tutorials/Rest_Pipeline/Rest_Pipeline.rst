@@ -40,7 +40,7 @@ rest_pipeline
 
 .. code:: python
 
-    channels = loading.Read_edf.Combine_EDF_XML('/Users/user/Desktop/Nagrania/rest/Rysiek_03_06/',True)
+    channels = loading.Read_edf.Combine_EDF_XML('/Users/user/Desktop/Nagrania/rest/Rysiek_03_06/',3,70)
     
     n_samples_back = {"Eyes Open": 0, "Eyes Closed": 0}
     n_samples_forth = {"Eyes Open":  500* 140, "Eyes Closed":  500* 140}
