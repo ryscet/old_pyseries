@@ -18,6 +18,11 @@ API
    Preprocessing
    ReadData
 
+Analysis
+^^^^^^^^
+.. toctree::
+	Analysis/ssvep_analysis/ssvep_analysis
+
 
 Examples
 ^^^^^^^^
