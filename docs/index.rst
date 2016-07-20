@@ -18,10 +18,11 @@ API
    Preprocessing
    ReadData
 
-Analysis
-^^^^^^^^
+Work
+^^^^
 .. toctree::
-	Analysis/ssvep_analysis/ssvep_analysis
+
+	work/ssvep_analysis/ssvep_analysis
 
 
 Examples
