@@ -1,3 +1,5 @@
+ssvep_analysis
+--------------
 
 .. code:: python
 
