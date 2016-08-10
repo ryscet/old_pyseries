@@ -1,4 +1,4 @@
-VisuallyEvokedPotentials
+Visually Evoked Potentials
 --------------------------
 .. code:: python
 
