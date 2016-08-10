@@ -22,9 +22,8 @@ Documentation
 Projects
 ^^^^^^^^
 .. toctree::
-   :maxdepth: 1
 
-	work/ssvep_analysis/ssvep_analysis
+	Projects/ssvep_analysis/ssvep_analysis
 
 Tutorials
 ^^^^^^^^
@@ -34,11 +33,6 @@ Tutorials
 	Tutorials/ssvep_pipeline/ssvep_pipeline
 	Tutorials/ANOVA_tutorial/ANOVA_tutorial
 	Tutorials/PCA_filtering_tutorial/PCA_filtering_tutorial
-
-
-
-
-
 
 
 Installation
