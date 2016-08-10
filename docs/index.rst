@@ -29,13 +29,9 @@ Examples
 ^^^^^^^^
 .. toctree::
 	
-	work/ssvep_analysis/ssvep_analysis
 	Tutorials/ssvep_analysis/ssvep_analysis
 
-	Tutorials/Rest_Pipeline/Rest_Pipeline
-	Tutorials/ssvep_pipeline/ssvep_pipeline
-	Tutorials/ANOVA_tutorial/ANOVA_tutorial
-	Tutorials/PCA_filtering_tutorial/PCA_filtering_tutorial
+
 
 
 
