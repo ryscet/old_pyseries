@@ -18,7 +18,7 @@ import numpy as np
 
 
 
-def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 100, mode = 'period', name = ''):
+def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 100, mode = 'period', name = '', save_path = ""):
     """Plot average and individual traces of power spectrum for signal epochs. 
 
     Parameters
@@ -78,6 +78,10 @@ def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 
         axes.set_xlabel('frequency')
     
         power_density[name] = (f[min_idx:max_idx], Pxx_den[:,min_idx:max_idx])
+        
+        if(save_path != ""):
+            fig.savefig(save_path)
+        
     return power_density
     
 

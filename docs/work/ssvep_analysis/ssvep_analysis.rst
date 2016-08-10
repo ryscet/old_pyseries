@@ -1,6 +1,5 @@
 ssvep_analysis
 --------------
-
 .. code:: python
 
     import sys

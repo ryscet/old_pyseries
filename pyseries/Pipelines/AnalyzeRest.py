@@ -18,17 +18,18 @@ def plot_rest():
                 '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Kuba_14_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/'
+                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/',
+                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21/'
                 ]
 
-    for path in paths:
-        print(path)
+
+    for idx, path in enumerate(paths):
         recording = loading.Read_edf.Combine_EDF_XML(path, 3, 70)
         
         epochs_info= {"Eyes Open": [0, 498*140], "Eyes Closed": [0, 498 *140]}
         
         epochs = prep.Epochs.Make_Epochs_for_Channels(recording, ['EEG O1'],epochs_info)
         
-        power_density= analysis.Explore.PlotPowerSpectrum(epochs['EEG O1'], 498, mode = 'welch', name = path)
+        power_density= analysis.Explore.PlotPowerSpectrum(epochs['EEG O1'], 498, mode = 'welch', name = path, save_path ="/Users/user/Desktop/Figures/rest/" + str(idx) + ".png"   )
 
         prep.Epochs.mark_events(recording,['EEG O1'], subject_name = path)
