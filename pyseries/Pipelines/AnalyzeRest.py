@@ -15,15 +15,19 @@ import pyseries.Analysis as analysis
 def plot_rest():
     paths = [   '/Users/user/Desktop/nagrania_eeg/rest/Ania_14_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Karen_14_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06/',
+                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Kuba_14_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06/',
+                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21/'
+                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21_16/',
+                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_21_16/',
+                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_07_21_16/'
+
                 ]
 
 
     for idx, path in enumerate(paths):
+        print(path)
         recording = loading.Read_edf.Combine_EDF_XML(path, 3, 70)
         
         epochs_info= {"Eyes Open": [0, 498*140], "Eyes Closed": [0, 498 *140]}
