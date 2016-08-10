@@ -9,14 +9,13 @@ academics looking for a quick start into EEG data analysis with python.
 
 This package is an initial release. Testing in progress
 
-API
-^^^
+Yalla
+^^^^^
 .. toctree::
    :maxdepth: 1
 
    Analysis
-   Preprocessing
-   ReadData
+
 
 Work
 ^^^^
