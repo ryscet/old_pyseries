@@ -22,7 +22,7 @@ Work
 ^^^^
 .. toctree::
 
-	Work/ssvep_analysis/ssvep_analysis
+	work/ssvep_analysis/ssvep_analysis
 
 Examples
 ^^^^^^^^
