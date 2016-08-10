@@ -23,8 +23,8 @@ Projects
 ^^^^^^^^
 .. toctree::
 
-	Projects/Visually\ Evoked\ Potentials/Visually\ Evoked\ Potentials.rst 
-	
+	Projects/VisuallyEvokedPotentials/VisuallyEvokedPotentials.rst 
+
 Tutorials
 ^^^^^^^^
 .. toctree::
