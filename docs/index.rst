@@ -9,26 +9,32 @@ academics looking for a quick start into EEG data analysis with python.
 
 This package is an initial release. Testing in progress
 
-Yalla
-^^^^^
+Documentation
+^^^^^^^^^^^^^
 .. toctree::
    :maxdepth: 1
 
    Analysis
+   Preprocessing
+   ReadData
 
 
-Work
-^^^^
+Projects
+^^^^^^^^
 .. toctree::
    :maxdepth: 1
 
 	work/ssvep_analysis/ssvep_analysis
 
-Examples
+Tutorials
 ^^^^^^^^
 .. toctree::
 	
-	Tutorials/ssvep_analysis/ssvep_analysis
+	Tutorials/Rest_Pipeline/Rest_Pipeline
+	Tutorials/ssvep_pipeline/ssvep_pipeline
+	Tutorials/ANOVA_tutorial/ANOVA_tutorial
+	Tutorials/PCA_filtering_tutorial/PCA_filtering_tutorial
+
 
 
 
