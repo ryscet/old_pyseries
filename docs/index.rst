@@ -23,7 +23,7 @@ Projects
 ^^^^^^^^
 .. toctree::
 
-	Projects/ssvep_analysis/ssvep_analysis
+	Projects/Visually\ Evoked\ Potentials/ssvep_analysis 
 
 Tutorials
 ^^^^^^^^

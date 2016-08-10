@@ -1,5 +1,5 @@
-ssvep_analysis
---------------
+Visually Evoked Potentials
+--------------------------
 .. code:: python
 
     import sys

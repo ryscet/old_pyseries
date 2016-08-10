@@ -27,20 +27,31 @@ import pyseries.Preprocessing.ArtifactRemoval as ar
 #TODO Make an organized/relative paths way of maintaining database
 #path = '/Users/user/Desktop/Nagrania/rest/Rysiek_03_06/'
 def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
-    """Extracts EEG channels data from edf and creates a new channel with timestamps. 
+    """Creates a dictionary with eeg signals, timestamps and events. 
+       Reads edf file with eeg signal. Uses xml file to add timestamps to eeg. Reads unity_log with experiment events times. 
          
+       Parameters
+       ----------
+       path:str
+           directory containing .edf, .xml, and .csv files.
+       freq_min, freq_max : int, int, optional
+            Deafault to 0, 70
+            bandpass filter parameters in Hz.
+
          Returns
          -------
-         signal_dict: dict
-             stores EEG timeseries and timestamps
+         signal_dict (dict of Objects): dict
+             stores eeg channels, ttimestamps and events.
+             Keys:
+             "EEG <channel name>" : eeg signal
+             "timestamp" : timestamps for eeg
+             "events" : names and timestamps of events
     
     """
     signal_dict = Read_EDF(path + "sygnal.edf")
 
     for chan_name, sig in signal_dict.items():
-        #signal_dict[chan_name] = ar.band_pass(sig, freq_min,freq_max)
-        signal_dict[chan_name] = sig
-
+        signal_dict[chan_name] = ar.band_pass(sig, freq_min,freq_max)
     
     log = pd.read_csv(path + 'unity_log.csv',parse_dates = True, index_col = 0, skiprows = 1, skipfooter = 1, engine='python')
     
@@ -62,18 +73,19 @@ def GetMaxLength(_dict):
 #path = '/Users/user/Desktop/Resty/Ewa_resting_state.edf'
 
 def Read_EDF(path):
-    """Read .edf exported from digitrack and converts them to a dictionary.
-        
-        Parameters
-        ----------
-        path:str
-            directory of .edf
-    
-        Returns
-        -------
-        signal_dict: dict(np.array)
-            Keys are channel names
-    """
+
+#  """Read .edf exported from digitrack and converts them to a dictionary.
+#      
+#      Parameters
+#      ----------
+#      path:str
+#          directory of .edf
+#  
+#      Returns
+#      -------
+#      signal_dict: dict(np.array)
+#          Keys are channel names
+#  """
     
     
     f = pyedflib.EdfReader(path)
@@ -100,14 +112,14 @@ def Read_EDF(path):
 
 def Read_XML(path):
 #    import xml.etree.cElementTree as ET
-    """Read the header for the signal from .EVX.
+#   """Read the header for the signal from .EVX.
 
-       Returns
-       -------
-       df: DataFrame
-           Contains timestamp marking first EEG sample
-    """
-    
+#      Returns
+#      -------
+#      df: DataFrame
+#          Contains timestamp marking first EEG sample
+#   """
+#   
     
     with open(path, mode='r',encoding='utf-8') as xml_file:
         xml_tree = etree.parse(xml_file)        
