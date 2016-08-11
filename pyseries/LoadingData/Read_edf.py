@@ -94,9 +94,9 @@ def Read_EDF(path):
     
     
     signal_dict = {}
-    print('Channels:')
+    #print('Channels:')
     for idx, name in enumerate(signal_labels):
-        print(name.decode("utf-8"))
+        #print(name.decode("utf-8"))
         signal_dict[name.decode("utf-8")] = f.readSignal(idx)
         
     f._close()

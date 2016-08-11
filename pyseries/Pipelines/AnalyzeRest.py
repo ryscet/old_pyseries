@@ -16,7 +16,6 @@ def plot_rest():
     paths = [   '/Users/user/Desktop/nagrania_eeg/rest/Ania_14_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Karen_14_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Kuba_14_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/',
                 '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21_16/',

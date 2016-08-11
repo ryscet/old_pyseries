@@ -47,14 +47,13 @@ Resting State
     def plot_rest():
         paths = [   '/Users/user/Desktop/nagrania_eeg/rest/Ania_14_06_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Karen_14_06_16/',
-                    '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Kuba_14_06_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_21_16/',
+                    '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/',
                     '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_07_21_16/'
-    
                     ]
     
     
@@ -72,6 +71,29 @@ Resting State
 .. code:: python
 
     plot_rest()
+
+
+.. parsed-literal::
+
+    (497.971446705165,)
+    /Users/user/Desktop/nagrania_eeg/rest/Ania_14_06_16/
+    (497.971446705165,)
+    /Users/user/Desktop/nagrania_eeg/rest/Karen_14_06_16/
+    (497.971446705165,)
+    /Users/user/Desktop/nagrania_eeg/rest/Kuba_14_06_16/
+    (497.971446705165,)
+    /Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06_16/
+    (500.0,)
+    /Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/
+    (500.0,)
+    /Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21_16/
+    (500.0,)
+    /Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_21_16/
+    (497.971446705165,)
+    /Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/
+    (500.0,)
+    /Users/user/Desktop/nagrania_eeg/rest/Agnieszka_07_21_16/
+
 
 
 .. image:: output_4_1.png
