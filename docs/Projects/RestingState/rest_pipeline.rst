@@ -131,10 +131,8 @@ Resting State
     :width: 20pt
     :height: 20pt
 
-.. |logo2| image:: output_4_6.png
-    :width: 20pt
-    :height: 20pt
+
 
  +---------+-----------+
- | |logo|  +  |logo2|  +
+ | |logo|  |  |logo|   |
  +---------+-----------+
