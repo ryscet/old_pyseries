@@ -120,8 +120,21 @@ Resting State
 .. image:: output_4_8.png
    :width: 30%
 
-
 .. image:: output_4_9.png
    :width: 30%
 
 
+
+
+
+.. |logo| image:: output_4_9.png
+   :width: 20pt
+   :height: 20pt
+
+.. |logo2| image:: output_4_6.png
+   :width: 20pt
+   :height: 20pt
+
+ +---------+-----------+
+ | |logo|  +  |logo2|  +
+ +---------+-----------+
