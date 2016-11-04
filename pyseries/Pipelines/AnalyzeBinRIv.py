@@ -24,7 +24,7 @@ def plot_bin_riv():
             '/Users/user/Desktop/nagrania_eeg/binriv/Ania_14_06_16/'
             ]
     for path in paths:
-        recording = loading.Read_edf.Combine_EDF_XML(path,0,10)
+        recording = loading.Read_edf.Combine_EDF_XML(path,0,70)
         
         
         f, Pxx_den = signal.welch(recording['EEG P4'], fs = 498, nperseg=512)

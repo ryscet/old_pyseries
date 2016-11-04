@@ -117,7 +117,8 @@ def mark_events(recording, ch_names, subject_name = ''):
         fig, axes = plt.subplots(1,1)
         fig.suptitle(electrode_name + ' ' + subject_name, fontweight = 'bold')
         
-        sig  = ob.signal.filter.bandpass(recording[electrode_name], 2, 30, df = 500)
+        sig = recording[electrode_name]
+        #sig = ob.signal.filter.bandpass(recording[electrode_name], 2, 30, df = 500)
         axes.plot(recording["timestamp"], sig, 'cornflowerblue')
         
         

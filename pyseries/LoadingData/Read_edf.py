@@ -10,6 +10,7 @@ from digitrack, then it can be parsed here.
 Use timestamps from experiment log file to cut slices from EEG around events. EEG and events need to be saved with respect to the same 
 clock, so best do experiment and recording on the same machine.
 """
+from io import open
 
 import pandas as pd
 import xml.etree.ElementTree as etree
@@ -52,6 +53,7 @@ def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
 
     for chan_name, sig in signal_dict.items():
         signal_dict[chan_name] = ar.band_pass(sig, freq_min,freq_max)
+        #signal_dict[chan_name] = sig
     
     log = pd.read_csv(path + 'unity_log.csv',parse_dates = True, index_col = 0, skiprows = 1, skipfooter = 1, engine='python')
     
@@ -136,8 +138,8 @@ def Read_XML(path):
             df = pd.DataFrame()            
 #HACK changing timezone by manually adding two hours
 #TODO make sure the timestamps will be possible to comapre between tz (utc) naive and tz aware formats
-            df['UNIXTIME'] = pd.to_datetime([u_time], unit='us') + pd.Timedelta(hours =2)
-            df['DateTime'] = pd.to_datetime([dt_time],infer_datetime_format =True) + pd.Timedelta(hours =2)
+            df['UNIXTIME'] = pd.to_datetime([u_time], unit='us') + pd.Timedelta(hours =1)
+            df['DateTime'] = pd.to_datetime([dt_time],infer_datetime_format =True) + pd.Timedelta(hours =1)
     return df
 
     
@@ -164,37 +166,5 @@ def Get_Exact_Sampling_rate(path):
         print(sr)
         
     return sr[0]
+    #return 497.971446705165
     
-
-    
-#    
-#    
-#def Random_Events():
-#
-#    dates = []
-#    
-#    for i in range(0,20): 
-#        year = 2016
-#        month = 5
-#        day = 31
-#        hour = random.randint(13, 14)
-#        minute = random.randint(42,59)
-#        second = random.randint(0,59)
-#        microseconds = 102001
-#        dates.append(datetime(year, month, day, hour, minute, second, microseconds))
-#        
-#    df = pd.DataFrame(index =pd.to_datetime(dates, infer_datetime_format=True))
-#    df['code'] =  np.hstack((np.zeros(10), np.ones(10)))
-#
-#    return df.sort_index()    
-    
-#    
-#def Sample_Data():
-#
-#    starting_time = Read_XML()['DateTime']
-#    sig_len = 25000
-#    signal = np.random.randn(sig_len)
-##Check if last index matches the ending timestamp from the XML header
-#    index = pd.date_range(starting_time.iloc[0] , periods=len(signal), freq='250ms')
-#    ts = pd.Series(signal, index=index )
-#    return ts

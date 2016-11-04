@@ -122,17 +122,3 @@ Resting State
 
 .. image:: output_4_9.png
    :width: 30%
-
-
-
-
-
-+------------------------+------------------------+ 
-|.. _figa:               |.. _figb:               | 
-|                        |                        | 
-|.. figure:: output_4_9.png   |.. figure:: output_4_8.png  | 
-|   :width: 95 %         |   :width: 95 %         | 
-|   :align: center       |   :align: center       | 
-|                        |                        | 
-|   Caption A here       |   Caption B here       | 
-+------------------------+------------------------+ 

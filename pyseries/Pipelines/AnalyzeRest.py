@@ -13,16 +13,18 @@ import pyseries.Analysis as analysis
 
 
 def plot_rest():
-    paths = [   '/Users/user/Desktop/nagrania_eeg/rest/Ania_14_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Karen_14_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_21_16/',
-                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_07_21_16/'
-
-                ]
+#    paths = [   '/Users/user/Desktop/nagrania_eeg/rest/Ania_14_06_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Karen_14_06_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_03_06_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_03_06_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_15_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Rysiek_07_21_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Aleksandra_07_21_16/',
+#                '/Users/user/Desktop/nagrania_eeg/rest/Agnieszka_07_21_16/'
+#
+#                ]
+    paths = ['/Users/user/Desktop/nagrania_eeg/rest/Maciek_08_26_16/',
+             '/Users/user/Desktop/nagrania_eeg/rest/Gosia_08_31_16/']
 
 
     for idx, path in enumerate(paths):
@@ -35,4 +37,4 @@ def plot_rest():
         
         power_density= analysis.Explore.PlotPowerSpectrum(epochs['EEG O1'], 498, mode = 'welch', name = path, save_path ="/Users/user/Desktop/Figures/rest/" + str(idx) + ".png"   )
 
-        prep.Epochs.mark_events(recording,['EEG O1'], subject_name = path)
+       # prep.Epochs.mark_events(recording,['EEG O1'], subject_name = path)
