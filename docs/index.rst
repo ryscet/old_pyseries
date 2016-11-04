@@ -1,4 +1,4 @@
-Welcome to pyseries documentation!
+Welcome to pyseries documentation - MINIMAL BRANCH
 ==================================
 .. image:: images/logo.jpg
 
