@@ -1,5 +1,5 @@
-Welcome to pyseries documentation - Minimal branch
-==================================================
+Welcome to pyseries documentation - Minimal version
+===================================================
 .. image:: images/logo.jpg
 
 Overwiev
