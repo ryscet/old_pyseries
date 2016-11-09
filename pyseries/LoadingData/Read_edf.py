@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """#Michal wprowadza zmiany
 ## test test test
+## jdfhdjgd
 Read_edf
 ========
 Reduced version for loading files. Reads a .edf file which contains sensor informations.
