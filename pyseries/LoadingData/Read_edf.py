@@ -4,7 +4,7 @@ Read_edf
 ========
 Reduced version for loading files. Reads a .edf file which contains sensor informations.
 Does not include time information for events synchronization.
- 
+Comment to test meld
 """
 
 import pyedflib 
