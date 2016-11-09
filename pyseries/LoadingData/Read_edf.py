@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+"""#Michal wprowadza zmiany
 Read_edf
 ========
 Reduced version for loading files. Reads a .edf file which contains sensor informations.
@@ -43,7 +43,7 @@ def Read_EDF(path):
     f._close()
     
     return signal_dict
-
+#
 
         
 
