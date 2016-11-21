@@ -1,6 +1,8 @@
 pyseries
 --------
+pyseries is a python package for EEG signal analysis. It provides API for data i/o, analysis and visualization. GUI is on the way, look at the minimal branch of the project.
 
+__documentation__
 
 The documentation is hosted on http://pyseries.readthedocs.io/en/master/
 
