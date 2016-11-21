@@ -6,7 +6,7 @@ The documentation is hosted on http://pyseries.readthedocs.io/en/master/
 
 
 Note you can change between documentation for different branches (master & minimal) using the button in lower right corner on read the docs:
-<img style="float: left;" src="https://github.com/ryscet/pyseries/blob/master/docs/images/rtd.png">
+<img src="https://github.com/ryscet/pyseries/blob/master/docs/images/rtd.png">
 
 
 Functions overview
