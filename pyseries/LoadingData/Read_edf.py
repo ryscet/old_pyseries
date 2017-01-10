@@ -27,7 +27,8 @@ import pyseries.Preprocessing.ArtifactRemoval as ar
 
 #TODO Make an organized/relative paths way of maintaining database
 #path = '/Users/user/Desktop/Nagrania/rest/Rysiek_03_06/'
-def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
+#def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
+def Combine_EDF_XML(path):
     """Creates a dictionary with eeg signals, timestamps and events. 
        Reads edf file with eeg signal. Uses xml file to add timestamps to eeg. Reads unity_log with experiment events times. 
          
@@ -35,9 +36,6 @@ def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
        ----------
        path:str
            directory containing .edf, .xml, and .csv files.
-       freq_min, freq_max : int, int, optional
-            Deafault to 0, 70
-            bandpass filter parameters in Hz.
 
          Returns
          -------
@@ -52,8 +50,8 @@ def Combine_EDF_XML(path,freq_min = 0, freq_max = 70):
     signal_dict = Read_EDF(path + "sygnal.edf")
 
     for chan_name, sig in signal_dict.items():
-        signal_dict[chan_name] = ar.band_pass(sig, freq_min,freq_max)
-        #signal_dict[chan_name] = sig
+        #signal_dict[chan_name] = ar.band_pass(sig, freq_min,freq_max)
+        signal_dict[chan_name] = sig
     
     log = pd.read_csv(path + 'unity_log.csv',parse_dates = True, index_col = 0, skiprows = 1, skipfooter = 1, engine='python')
     
