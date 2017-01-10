@@ -111,15 +111,14 @@ def mark_events(recording, ch_names, subject_name = ''):
     
     color_dict =  {name: colors[i] for i, name in enumerate(unique_events)}
     
-    
+    fig, axes = plt.subplots(1,1)
+    fig.suptitle(subject_name, fontweight = 'bold')
          
     for electrode_name in ch_names:
-        fig, axes = plt.subplots(1,1)
-        fig.suptitle(electrode_name + ' ' + subject_name, fontweight = 'bold')
+
         
         sig = recording[electrode_name]
-        #sig = ob.signal.filter.bandpass(recording[electrode_name], 2, 30, df = 500)
-        axes.plot(recording["timestamp"], sig, 'cornflowerblue')
+        axes.plot(recording["timestamp"], sig, label = electrode_name)
         
         
         ymin, ymax = axes.get_ylim()
