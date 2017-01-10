@@ -6,7 +6,6 @@ Epochs
 Making epochs (i.e slicing the signal) around events. 
 After epoching analysis can be performed, like erp's or spectrograms.
 """
-import obspy as ob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -62,11 +61,9 @@ def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
     
     epochs = {}
     
-    for name in ch_names:
-        filtered = ob.signal.filter.bandpass(recording[name], 2, 30, df = 500)
+    for name in ch_names:        
         
-        
-        time_series =pd.Series(np.array(filtered, dtype = 'float32'), index = recording['timestamp'] )
+        time_series =pd.Series(np.array(recording[name], dtype = 'float32'), index = recording['timestamp'] )
         epochs[name] = Make_Slices_Groups(time_series, events, epochs_info)
     
     return epochs

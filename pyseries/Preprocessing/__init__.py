@@ -4,7 +4,8 @@
 
 """
 
-from . import PrepareData
+#from . import PrepareData
+from . import Prepare
 from . import ArtifactRemoval 
 from . import Epochs
 
