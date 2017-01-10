@@ -84,9 +84,15 @@ def Cut_Slices_From_Signal(_signal, events, epoch_info):
     slices = np.zeros((len(events.index), epoch_info[0] + epoch_info[1]))    
     for idx, timestamp in enumerate(events.index):
         #Finding first index greater than event timestamp produces more error than finding the closest data timestamp regrdless of whether it is larger or smaller than event.
-        event_index = Find_Closest_Sample(_signal,timestamp)
-        slices[idx,:] = _signal.iloc[event_index - epoch_info[0] : event_index + epoch_info[1]]
-    
+        try:
+            assert timestamp > _signal.index[0] and timestamp < _signal.index[-1], 'event %i not in range'%idx
+            event_index = Find_Closest_Sample(_signal,timestamp)
+            slices[idx,:] = _signal.iloc[event_index - epoch_info[0] : event_index + epoch_info[1]]
+        except AssertionError as e:
+            print(str(e))
+            pass
+    #Filter out 0 rows which had not been in range of assert
+    slices = slices[~np.all(slices == 0, axis=1)]
     return slices
 
 def mark_events(recording, ch_names, subject_name = ''):
@@ -115,7 +121,7 @@ def mark_events(recording, ch_names, subject_name = ''):
 
         
         sig = recording[electrode_name]
-        axes.plot(recording["timestamp"], sig, label = electrode_name)
+        axes.plot(recording["timestamp"], sig, alpha = 0.5, label = electrode_name)
         
         
         ymin, ymax = axes.get_ylim()

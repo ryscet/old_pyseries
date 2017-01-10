@@ -8,3 +8,4 @@ from . import CrossCorrelate
 from . import Normalize 
 from . import Trends
 from . import Explore
+from . import erp

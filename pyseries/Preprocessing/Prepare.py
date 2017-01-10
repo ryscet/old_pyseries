@@ -31,4 +31,20 @@ def Z_score_all(recording):
 			recording[key] = Z_score(value)
 	return recording
 
+def forward_difference(recording):
+	for key, value in recording.items():
+		if(key not in ['events', 'timestamp']):
+			recording[key] = np.diff(value)
+	#Forward difference does not exist for last entry. For a time stamp we take the time of the end of the difference
+	recording['timestamp'] = recording['timestamp'][1::]
+	return recording
+
+def absolute_val(recording):
+	for key, value in recording.items():
+		if(key not in ['events', 'timestamp']):
+			recording[key] = np.abs(value)
+	#Forward difference does not exist for last entry. For a time stamp we take the time of the end of the difference
+	#recording['timestamp'] = recording['timestamp'][1::]
+	return recording
+
 
