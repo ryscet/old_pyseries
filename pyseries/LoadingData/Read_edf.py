@@ -18,7 +18,6 @@ import xml.etree.ElementTree as etree
 import pyedflib 
 import numpy as np
 from datetime import datetime
-import random
 import struct
 import pyseries.Preprocessing.ArtifactRemoval as ar
 
@@ -60,7 +59,7 @@ def Combine_EDF_XML(path):
     e_ts = exact_timestamp(path, GetMaxLength(signal_dict))
 #TODO decide which timestamp is correct
     signal_dict['timestamp'] = e_ts
-
+    signal_dict['sr'] = Get_Exact_Sampling_rate(path)
     
     return signal_dict
     
@@ -161,7 +160,7 @@ def Get_Exact_Sampling_rate(path):
         binary_file.seek((490+(89*32)))  # Go to bite nr
         couple_bytes = binary_file.read(8)
         sr = struct.unpack("d", couple_bytes)
-        print(sr)
+        #print('Sampling Rate: %s'%str(sr))
         
     return sr[0]
     #return 497.971446705165

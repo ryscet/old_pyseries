@@ -18,7 +18,7 @@ import numpy as np
 
 
 
-def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 100, mode = 'period', name = '', save_path = ""):
+def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 100, mode = 'welch', name = '', save_path = ""):
     """Plot average and individual traces of power spectrum for signal epochs. 
 
     Parameters

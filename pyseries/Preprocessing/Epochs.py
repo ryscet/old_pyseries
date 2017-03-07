@@ -13,7 +13,7 @@ from collections import OrderedDict
 
 
 
-def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
+def Make_Epochs_for_Channels(recording, ch_names, events_name, epochs_info):
     """Epochs are pieces of signal which happened right after and/or before an event.
     
        `epochs_info` defines type of events and size of the epoch. 
@@ -26,6 +26,8 @@ def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
         contains EEG channels, events and timestamps
     ch_names: list(str)
         List of channels to create epochs from
+    events_name: str
+        name of the field in the recording dict with events prepared for epochs extraction
     epochs_info: dict
         Key is event name, value is an array [n_samples_back, n_samples_before]
     
@@ -57,27 +59,30 @@ def Make_Epochs_for_Channels(recording, ch_names, epochs_info):
         
     """    
     
-    events = recording["events"]
+    events = recording[events_name]
     
     epochs = {}
     
     for name in ch_names:        
-        
+        print(name)
         time_series =pd.Series(np.array(recording[name], dtype = 'float32'), index = recording['timestamp'] )
         epochs[name] = Make_Slices_Groups(time_series, events, epochs_info)
     
     return epochs
     
-def Make_Slices_Groups(data, events, epochs_info):
+def Make_Slices_Groups(data, events, epochs_info, format = 'long'):
     #Specify useful events by storing them in a dict specifying n_samples back and forth
-
+    # format of the data frame can be long (two columns, one with code another with time) or wide, then we pass a list of data frames
+    # Todo, implement wide format function. Do it.
     grouped_slices = {}   
     
     for event_name, events_single_type in events.groupby('code'):
-        if(event_name in epochs_info.keys()):
-            grouped_slices[str(event_name)] = Cut_Slices_From_Signal(data, events_single_type, epochs_info[event_name])    
+        #assert event_name in epochs_info.keys(), 'code not matching epochs name'
+        grouped_slices[str(event_name)] = Cut_Slices_From_Signal(data, events_single_type, epochs_info[event_name])    
     return grouped_slices
     
+
+
 def Cut_Slices_From_Signal(_signal, events, epoch_info):
 #Iterates through all events and finds the index of the closest EEG sample in the _signal. 
 #Takes a window spanning back and forth around the closest sample. 
