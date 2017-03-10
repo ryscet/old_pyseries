@@ -5,6 +5,5 @@ scipy
 sklearn
 matplotlib
 seaborn
-deepdish
 obspy
 tabulate
