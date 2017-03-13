@@ -13,7 +13,7 @@ from collections import OrderedDict
 
 
 
-def Make_Epochs_for_Channels(recording, ch_names, events_name, epochs_info):
+def Make_Epochs_for_Channels(recording, ch_names, events_name, epoch_window):
     """Epochs are pieces of signal which happened right after and/or before an event.
     
        `epochs_info` defines type of events and size of the epoch. 
@@ -51,7 +51,7 @@ def Make_Epochs_for_Channels(recording, ch_names, events_name, epochs_info):
     Epochs will be created only from events which name match those provided by keys in epochs info dictionary.
     Values in epochs infor dictionary are [n_samples_before, n_samples_forward]         
     
-    >>> epochs_info = {'Eyes Open': [0: 500 * 140], 'Eyes Closed': [0: 500 *140]}         
+    >>> epochs_info = {'Eyes Open': [0, 500 * 140], 'Eyes Closed': [0, 500 *140]}         
     
     Now you can make epochs:
 
@@ -66,19 +66,20 @@ def Make_Epochs_for_Channels(recording, ch_names, events_name, epochs_info):
     for name in ch_names:        
         print(name)
         time_series =pd.Series(np.array(recording[name], dtype = 'float32'), index = recording['timestamp'] )
-        epochs[name] = Make_Slices_Groups(time_series, events, epochs_info)
+        epochs[name] = Make_Slices_Groups(time_series, events, epoch_window)
     
     return epochs
     
-def Make_Slices_Groups(data, events, epochs_info, format = 'long'):
+def Make_Slices_Groups(data, events, epoch_window, format = 'long'):
     #Specify useful events by storing them in a dict specifying n_samples back and forth
     # format of the data frame can be long (two columns, one with code another with time) or wide, then we pass a list of data frames
     # Todo, implement wide format function. Do it.
     grouped_slices = {}   
     
     for event_name, events_single_type in events.groupby('code'):
+        print(event_name)
         #assert event_name in epochs_info.keys(), 'code not matching epochs name'
-        grouped_slices[str(event_name)] = Cut_Slices_From_Signal(data, events_single_type, epochs_info[event_name])    
+        grouped_slices[str(event_name)] = Cut_Slices_From_Signal(data, events_single_type, epoch_window[event_name])    
     return grouped_slices
     
 
@@ -100,7 +101,7 @@ def Cut_Slices_From_Signal(_signal, events, epoch_info):
     slices = slices[~np.all(slices == 0, axis=1)]
     return slices
 
-def mark_events(recording, ch_names, subject_name = ''):
+def mark_events(recording, ch_names = []):
     """Plots raw signal with event markers on top.
     
     Parameters
@@ -113,6 +114,13 @@ def mark_events(recording, ch_names, subject_name = ''):
     events = recording['events']
     #get number of event types
     unique_events =events['code'].unique()
+    
+    subject_name = recording['subject_name']
+    
+    # If the user does not specify otherwise, plot all eeg channels overlapping
+    if not ch_names:
+        ch_names = recording['eeg_names']
+    
     #Choose colormap
     colormap = plt.cm.Paired # gist_ncar #nipy_spectral, Set1,Paired   
     colors = [colormap(i) for i in np.linspace(0, 1,len(unique_events))]
@@ -132,14 +140,33 @@ def mark_events(recording, ch_names, subject_name = ''):
         ymin, ymax = axes.get_ylim()
          #Pos for annotations
         ypos = ymax - np.abs(ymin) + np.abs(ymax)/3.0
-        for idx, row in recording["events"].iterrows():
-            axes.axvline(idx, linestyle='--',label = row['code'], color = color_dict[row['code']])
-            axes.annotate(row['code'], xy = (idx, ypos), rotation = 90, color = color_dict[row['code']], horizontalalignment='right')            
         
-        handles, labels = plt.gca().get_legend_handles_labels()
-        by_label = OrderedDict(zip(labels, handles))
-        plt.legend(by_label.values(), by_label.keys())
+    for idx, row in recording["events"].iterrows():
+        axes.axvline(idx, linestyle='--',label = row['code'], color = color_dict[row['code']])
+        axes.annotate(row['code'], xy = (idx, ypos), rotation = 90, color = color_dict[row['code']], horizontalalignment='right')            
+    
+    handles, labels = plt.gca().get_legend_handles_labels()
+    by_label = OrderedDict(zip(labels, handles))
+    plt.legend(by_label.values(), by_label.keys())
 
+#
+#from bokeh.charts import Line, show, output_file
+#
+#from bokeh.plotting import figure, output_file, show
+#
+#eeg_subset = ['EEG O1', 'EEG O2']
+#data = {k: recording.get(k, None) for k in eeg_subset}
+#
+## create a line chart where each column of measures receives a unique color and dash style
+#line = Line(data, y=eeg_subset,
+#            dash=eeg_subset,
+#            color=eeg_subset,
+#            legend_sort_field = 'color',
+#            legend_sort_direction = 'ascending',
+#            title="Interpreter Sample Data", ylabel='Duration', legend=True)
+#
+#output_file("line_single.html", title="line_single.py example")
+#show(line)
 
 
 def Find_Closest_Sample(signal, event_time):

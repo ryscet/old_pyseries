@@ -15,10 +15,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
+import itertools
 
 
-
-def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 100, mode = 'welch', name = '', save_path = ""):
+def PlotPowerSpectrum(electrode_slices, exact_sr, freq_min = 0, freq_max = 100, mode = 'welch', name = '', save_path = ""):
     """Plot average and individual traces of power spectrum for signal epochs. 
 
     Parameters
@@ -44,13 +44,13 @@ def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 
 
     """
     
-    sns.set()
-    sns.set_palette("hls")
+    #sns.set()
+    #sns.set_palette("hls")
     fig, axes = plt.subplots(1)
     fig.suptitle(name)
     print(name)
-    colors = ['r','g', 'b', 'yellow', 'm', 'orange']
-    color_dict =  {name: colors[i] for i, name in enumerate(electrode_slices.keys())}
+    
+    palette = itertools.cycle(sns.color_palette())
     
     power_density = {}    
     
@@ -60,17 +60,12 @@ def PlotPowerSpectrum(electrode_slices, exact_sr =498, freq_min = 0, freq_max = 
             f, Pxx_den = signal.welch(event, exact_sr, nperseg=512)
         elif mode=='period':
             f, Pxx_den = signal.periodogram(event, exact_sr)
-        
-#        elif mode=='fft':
-#            n = len(event[0,:])
-#            f = frq[range(n/2)]            
-#            Pxx_den = np.fft.fft(event)/n 
-#      
+    
         
         min_idx = np.argmax(f > freq_min)
         max_idx = np.argmax(f > freq_max)
         
-        g = sns.tsplot(data=Pxx_den[:,min_idx:max_idx], time = f[min_idx:max_idx],  err_style="unit_traces", condition = name, color =color_dict[name], ax = axes)
+        g = sns.tsplot(data=Pxx_den[:,min_idx:max_idx], time = f[min_idx:max_idx],  err_style="unit_traces", condition = name, color =next(palette), ax = axes)
        # g.fig.suptitle()
         axes.set_yticklabels(labels = f[min_idx: max_idx], rotation = 0)
 

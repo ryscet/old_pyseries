@@ -67,7 +67,12 @@ def Combine_EDF_XML(path):
 
     #Expand the timestamp using the info about first sample time (from digi_log.xml) and sampling rate
     signal_dict['timestamp'] = exact_timestamp(path, signal_dict['n_samples'], signal_dict['sr'])
-
+    
+    #Add a list of all electrode names, usefull for plotting functions to loop over all electrodes
+    signal_dict['eeg_names'] = [key for key in signal_dict.iterkeys() if 'EEG' in key]
+    
+    #Keep tract of subject name, also useful for plotting
+    signal_dict['subject_name'] = path.split('/')[-3]
     
     return signal_dict
   

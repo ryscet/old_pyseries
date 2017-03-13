@@ -4,6 +4,23 @@ Common steps to take before analysis. Data cleaning, filtering, normalizing.
 import numpy as np
 import obspy as ob
 
+def trim_outside_experiment(recording):
+    #returning from this function does not make any sense as it operates by reference
+    #warning the different type of time datatypes comparison is only possible in that order: Timestamp < numpy.datetime64
+    assert recording['events'].index[0] > recording['timestamp'][0] and recording['events'].index[-1] < recording['timestamp'][-1], 'events not in range'
+    
+    
+    start_index = np.argmin(np.abs(recording['timestamp'] - np.datetime64(recording['events'].index[0]))) - 2
+    end_index = np.argmin(np.abs(recording['timestamp'] - np.datetime64(recording['events'].index[-1]))) + 2
+        
+    for ch_name in recording['eeg_names']:
+        recording[ch_name] = recording[ch_name][start_index: end_index]
+
+    recording['timestamp'] = recording['timestamp'][start_index: end_index]
+
+    return recording
+
+
 def Filter_all(recording, min_freq = 1, max_freq = 70, df = 500):
 
 	for key, value in recording.items():
