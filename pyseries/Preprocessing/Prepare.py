@@ -21,11 +21,10 @@ def trim_outside_experiment(recording):
     return recording
 
 
-def Filter_all(recording, min_freq = 1, max_freq = 70, df = 500):
+def Filter_all(recording, min_freq = 1, max_freq = 70):
 
-	for key, value in recording.items():
-		if(key not in ['events', 'timestamp']):
-			recording[key] = ob.signal.filter.bandpass(value, min_freq, max_freq, df = sr)
+	for key in recording['eeg_names']:
+		recording[key] = ob.signal.filter.bandpass(recording[key], min_freq, max_freq, df = int(recording['sr']))
 	return recording
 
 
