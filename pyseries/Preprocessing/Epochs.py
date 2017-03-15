@@ -11,6 +11,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 
+def Fast_Epochs(recording, events_name,  back, forth):
+    """ Could be faster (pre-locate number of slices), events need to be preprocessed: index of events is their timestamp, code is their category. Events name has to indicate the type, for example response_events, then index is response time and code is accuracy."""
+    
+    events = recording[events_name]
+    data_matrix = np.array([recording[key] for key in recording['eeg_names']])
+    all_slices = {code: [] for code in events['code'].unique()}
+    
+    for idx, event in events.iterrows():
+        event_index = np.argmin(np.abs(recording['timestamp'] - np.datetime64(idx)))
+        all_slices[event['code']].append(data_matrix[:, event_index - back : event_index + forth])
+    
+    return all_slices 
+
+
 
 
 def Make_Epochs_for_Channels(recording, ch_names, events_name, epoch_window):
@@ -100,6 +114,7 @@ def Cut_Slices_From_Signal(_signal, events, epoch_info):
     #Filter out 0 rows which had not been in range of assert
     slices = slices[~np.all(slices == 0, axis=1)]
     return slices
+
 
 def mark_events(recording, ch_names = []):
     """Plots raw signal with event markers on top.
