@@ -60,7 +60,7 @@ def Combine_EDF_XML(path):
     #Get the timestamp based on the info from the exact_timestamp field in the .1 file  
 
     #Number of EEG samples
-    signal_dict['n_samples'] = next(len(value) for (key,value) in signal_dict.iteritems() if 'EEG' in key)
+    signal_dict['n_samples'] = next(len(value) for (key,value) in signal_dict.items() if 'EEG' in key)
 
     #Sampling rate from the digi_binary.1 file
     signal_dict['sr'] = Get_Exact_Sampling_rate(path)
@@ -69,11 +69,19 @@ def Combine_EDF_XML(path):
     signal_dict['timestamp'] = exact_timestamp(path, signal_dict['n_samples'], signal_dict['sr'])
     
     #Add a list of all electrode names, usefull for plotting functions to loop over all electrodes
-    signal_dict['eeg_names'] = [key for key in signal_dict.iterkeys() if 'EEG' in key]
+    signal_dict['eeg_names'] = [key for key in signal_dict.keys() if 'EEG' in key]
     
     #Keep tract of subject name, also useful for plotting
     signal_dict['subject_name'] = path.split('/')[-3]
     
+    #Save the time of first sample for exporting data to edf
+    signal_dict['first_sample_time'] = signal_dict['timestamp'][0]
+
+    #store the timestamp in ms from start of eeg recording, for edf
+    signal_dict['first_sample_time'] = signal_dict['timestamp'][0]
+    
+    signal_dict['timestamp_ms'] = (signal_dict['timestamp'] - signal_dict['first_sample_time']).astype('timedelta64[ms]').astype('float')
+
     return signal_dict
   
 
