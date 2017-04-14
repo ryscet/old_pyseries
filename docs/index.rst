@@ -9,7 +9,7 @@ academics looking for a quick start into EEG data analysis with python.
 
 
 .. toctree::
-	:maxdepth: 2
+   :titlesonly:
 	
 	new_documentation
 
