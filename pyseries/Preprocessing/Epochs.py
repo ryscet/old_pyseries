@@ -63,7 +63,7 @@ def Different_Epochs(recording, time_column_A, time_column_B,  back, forth):
     #events = prepare_events(recording, time_column, category_column)
     data_matrix = np.array([recording[key] for key in recording['eeg_names']])
     all_slices = {event: [] for event in [time_column_A, time_column_B]}
-    
+    print([time_column_A, time_column_B])
     for time_col in [time_column_A, time_column_B]:
         for event in recording['events'][time_col]:
             event_index = np.argmin(np.abs(recording['timestamp'] - np.datetime64(event)))

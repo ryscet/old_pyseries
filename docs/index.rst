@@ -7,7 +7,9 @@ Overwiev
 pySeries is a package for statistical analysis of EEG data. Developed for neuro and cognitive science 
 academics looking for a quick start into EEG data analysis with python. 
 
-This package is an initial release. Testing in progress
+.. toctree::
+   new_documentation
+
 
 Documentation
 ^^^^^^^^^^^^^
