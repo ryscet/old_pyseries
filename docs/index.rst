@@ -11,15 +11,6 @@ academics looking for a quick start into EEG data analysis with python.
    new_documentation
 
 
-Documentation
-^^^^^^^^^^^^^
-.. toctree::
-   :maxdepth: 1
-
-   Analysis
-   Preprocessing
-   ReadData
-
 
 Projects
 ^^^^^^^^
