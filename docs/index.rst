@@ -8,7 +8,10 @@ pySeries is a package for statistical analysis of EEG data. Developed for neuro 
 academics looking for a quick start into EEG data analysis with python. 
 
 
-* :ref:`new_documentation`
+.. toctree::
+	:maxdepth: 2
+	
+	new_documentation
 
 
 
