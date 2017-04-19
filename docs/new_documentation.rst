@@ -14,13 +14,10 @@ An important element in ``recording`` dictionary is a pandas dataframe under key
 .. image:: images/events.png
 	:scale: 30 %
 
-Hello
-=====
-.. toctree::
-   :maxdepth: 1
 
-.. automodule:: pyseries.LoadingData.Read_edf
-   :members:
+.. toctree::
+
+   Analysis
 
 API
 ^^^
