@@ -12,7 +12,7 @@ academics looking for a quick start into EEG data analysis with python.
 
 .. toctree::
    
-   Analysis
+   ReadData
 
 
 

@@ -17,7 +17,7 @@ An important element in ``recording`` dictionary is a pandas dataframe under key
 
 .. toctree::
 
-   Analysis
+   ReadData
 
 API
 ^^^
