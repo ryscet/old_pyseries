@@ -10,7 +10,12 @@ academics looking for a quick start into EEG data analysis with python.
 
 :doc:`new_documentation`
 
+.. toctree::
+   :maxdepth: 1
 
+Hello
+.. automodule:: pyseries.LoadingData.Read_edf
+   :members:
 
 Projects
 ^^^^^^^^
