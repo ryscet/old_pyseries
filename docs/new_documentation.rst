@@ -15,10 +15,15 @@ An important element in ``recording`` dictionary is a pandas dataframe under key
 	:scale: 30 %
 
 
+.. toctree::
+   :maxdepth: 1
+
+.. automodule:: pyseries.LoadingData.Read_edf
+   :members:
+
 API
 ^^^
 .. toctree::
-   :maxdepth: 1
 
    Analysis
    Preprocessing

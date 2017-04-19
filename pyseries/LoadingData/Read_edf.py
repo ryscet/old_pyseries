@@ -71,8 +71,9 @@ def MNE_Read_EDF(path):
         for event in log[time_col]:
             event_index = np.argmin(np.abs(timestamp - np.datetime64(event)))
             event_sample_indexes[time_col].append(event_index)
-    # Store the code and ints label in the theictionary
-    event_id = {event_name : idx for idx, event_name in enumerate(event_time_columns)}
+    # Store the code and ints label in the the dictionary
+    # IMPORTANT event code cannot be zero - the stimulus channel default value for no event is zero 
+    event_id = {event_name : idx + 1 for idx, event_name in enumerate(event_time_columns)}
 
     # Process the events info untill it is in the format specified by MNE, i.e. ndarray with 3 columns
     events = pd.DataFrame(columns = ['sample_nr',  'code'])

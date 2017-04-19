@@ -27,9 +27,3 @@ Tutorials
 	Tutorials/ANOVA_tutorial/ANOVA_tutorial
 
 
-Installation
-^^^^^^^^^^^^
-
-You can install using `pip <https://pypi.python.org/pypi/pySeries>`_:
-
->>> sudo pip install pyseries
