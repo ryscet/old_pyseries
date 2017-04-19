@@ -19,7 +19,77 @@ import pyedflib
 import numpy as np
 from datetime import datetime
 import struct
+import mne
+import pandas as pd
 
+
+def MNE_Read_EDF(path):
+    import scipy.stats.mstats as sp
+    """Read .edf exported from digitrack using MNE library.
+      
+      Parameters
+      ----------
+      path:str
+          directory of a folder containing the following files: sygnal.edf, unity_log.csv, digi_log.xml, digi_binary.1
+          This is usually the folder with the subject name. ex: '/Users/rcetnarski/Desktop/Dane EEG/Pilot_Gabory/Maciek/experiment/'
+  
+      Returns
+      -------
+      raw_mne: mne.Raw object
+          http://martinos.org/mne/dev/generated/mne.io.RawArray.html#mne.io.RawArray
+          
+      events: ndarray (n_events, 3)
+          the first column is the sample number when index occured,
+          second column is a mne requirement and has to be ignored,
+          third column is the event code
+          
+      event_id: dict(event label : event code)
+          dictionary with labels describing the event codes
+    """
+    # Load the eeg data 
+    raw_mne =  mne.io.read_raw_edf(path + 'sygnal.edf', stim_channel = None, preload = True)
+    
+    # Fix the sampling rate info saved in the original sygnal.edf. Our software does not save it with high precision in the .edf file, so we will replace it manually.
+    exact_sr = Get_Exact_Sampling_rate(path) # Get the high precision sampling rate
+    raw_mne.info.update({'sfreq' : exact_sr }) # Update the mne info with the high precision sampling rate
+    
+    # Create a timestamp vector so event times can be expressed in sample number of eeg
+    timestamp = exact_timestamp(path, raw_mne.n_times, exact_sr)
+    # Read the events file
+    log = pd.read_csv(path + 'unity_log.csv',parse_dates = True, index_col = 0, skiprows = 1, skipfooter = 1, engine='python')
+    
+    # Select the columns where the timestamp of the event was written
+    event_time_columns =[col_name for col_name in log.columns if 'time' in col_name and 'response' not in col_name]
+    
+    # Convert the timestamp in datetime format to a sample number counted from the first sample of EEG recording    
+    # Find the index of event time in the timestamp vector. This index is the sample number of the event, relative to the first eeg sample.
+    event_sample_indexes = {}
+    # Iterate over columns with times for different events
+    for time_col in event_time_columns:
+        event_sample_indexes[time_col] = []
+        # Iterate over each event
+        for event in log[time_col]:
+            event_index = np.argmin(np.abs(timestamp - np.datetime64(event)))
+            event_sample_indexes[time_col].append(event_index)
+    # Store the code and ints label in the theictionary
+    event_id = {event_name : idx for idx, event_name in enumerate(event_time_columns)}
+
+    # Process the events info untill it is in the format specified by MNE, i.e. ndarray with 3 columns
+    events = pd.DataFrame(columns = ['sample_nr',  'code'])
+    # Stack vertically all sample numbers for different events
+    for event_label, sample_numbers in event_sample_indexes.items():
+        tmp = pd.DataFrame(sample_numbers, columns = ['sample_nr'])
+        tmp['code'] = event_id[event_label]
+        # stack 
+        events =  events.append(tmp)
+   # Sort events chronologically
+    events = events.sort_values(by = 'sample_nr')
+   # Change to numpy array of ints
+    events = events.as_matrix().astype('int')
+   # MNE needs an extra column of zeros in the middle, it won't be used but has to be there
+    events = np.insert(events, 1, 0, axis=1)
+
+    return raw_mne, events, event_id 
 
 
 def Combine_EDF_XML(path):
@@ -83,29 +153,7 @@ def Combine_EDF_XML(path):
     signal_dict['timestamp_ms'] = (signal_dict['timestamp'] - signal_dict['first_sample_time']).astype('timedelta64[ms]').astype('float')
 
     return signal_dict
-  
-
-def exact_timestamp(path, n_samples, sampling_rate):
-    """Elmiko EEG amplifier 1042 calibrates to produce a sampling rate defined by the user. 
-        The calibrated sampling rate is slightly different from user defintion.
-        Calibrated sampling rate is saved in the header of digi_binary.1 file.
-        """
-    #Convert to nanoseconds by multiplying to desired resolution and cutting the reminding decimal places using int(). *time units change by order of 10^3
-    #Conversion will be used to produce a high precision timestamp (something went funny in the np.timedelta64 function when trying to use ms instead of ns)
-    #NOTE: exact_sr_ns is actually a sample duration in nanoseconds
-    exact_sr_ns = int(1000.0/sampling_rate*10**3 *10**3)
-    # Create an empty time vector of nanosecond precision datetimes
-    timestamp = np.empty(n_samples, dtype='datetime64[ns]')
-    # Set the first value using the first sample time saved by digi track
-    timestamp[0] =Read_XML(path + 'digi_log.xml')['DateTime'].iloc[0]
-    # Populate the time vector by adding sample duration to the next sample.
-    for i in range(n_samples - 1):
-        timestamp[i+1] = timestamp[i] + np.timedelta64(exact_sr_ns, 'ns')
-
-    return timestamp
-
-
-
+ 
 def Read_EDF(path):
     """Read .edf exported from digitrack and converts them to a dictionary.
       
@@ -136,6 +184,26 @@ def Read_EDF(path):
 
     return signal_dict
     
+        
+    
+def exact_timestamp(path, n_samples, sampling_rate):
+    """Elmiko EEG amplifier 1042 calibrates to produce a sampling rate defined by the user. 
+        The calibrated sampling rate is slightly different from user defintion.
+        Calibrated sampling rate is saved in the header of digi_binary.1 file.
+        """
+    #Convert to nanoseconds by multiplying to desired resolution and cutting the reminding decimal places using int(). *time units change by order of 10^3
+    #Conversion will be used to produce a high precision timestamp (something went funny in the np.timedelta64 function when trying to use ms instead of ns)
+    #NOTE: exact_sr_ns is actually a sample duration in nanoseconds
+    exact_sr_ns = int(1000.0/sampling_rate*10**3 *10**3)
+    # Create an empty time vector of nanosecond precision datetimes
+    timestamp = np.empty(n_samples, dtype='datetime64[ns]')
+    # Set the first value using the first sample time saved by digi track
+    timestamp[0] =Read_XML(path + 'digi_log.xml')['DateTime'].iloc[0]
+    # Populate the time vector by adding sample duration to the next sample.
+    for i in range(n_samples - 1):
+        timestamp[i+1] = timestamp[i] + np.timedelta64(exact_sr_ns, 'ns')
+
+    return timestamp
 
 def Read_XML(path):
     """Read the header for the signal from .EVX.
