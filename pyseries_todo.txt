@@ -1,0 +1,18 @@
+#I/O
+-add info to expect error when polish characters are in xml file - deal by manually changing them
+
+#VISUALIZE
+-change all plotting functions that iterate over unkown number of different colors to use seaborn pallete with next()
+
+#OPTIMIZE
+-convert the recording into 2D numpy array, and when needed retrieve the ch names as row names. Then perform all operations on this numpy array and not on dict -> for example in make epochs this will speed things up, no need to make epochs for each channel separately
+
+>> import itertools
+ax=fig.add_subplot(111)
+palette = itertools.cycle(sns.color_palette())
+for f in files:
+    ax.scatter(args, color=next(palette))
+
+-make sure not to return values where operations are by reference anyways: Preprocessing.prepare functionsś
+
+-Convert recording to object for fuck sake
