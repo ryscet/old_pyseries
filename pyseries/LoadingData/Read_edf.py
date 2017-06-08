@@ -47,11 +47,11 @@ def MNE_Read_EDF(path):
           dictionary with labels describing the event codes
     """
     # Load the eeg data 
+    print(glob.glob(path +'*.edf'))
     assert len(glob.glob(path +'*.edf')) == 1 # Only one edf in the directory
-    edf_path = glob.glob(path +'*.edf')[0]) # from the sygnal.edf file
-
-    raw_mne =  mne.io.read_raw_edf(edf_path, stim_channel = None, preload = True)
+    edf_path = glob.glob(path +'*.edf')[0] # from the sygnal.edf file
     
+    raw_mne =  mne.io.read_raw_edf(edf_path,stim_channel = None, preload = True)
     # Fix the sampling rate info saved in the original sygnal.edf. Our software does not save it with high precision in the .edf file, so we will replace it manually.
     exact_sr = Get_Exact_Sampling_rate(path) # Get the high precision sampling rate
     raw_mne.info.update({'sfreq' : exact_sr }) # Update the mne info with the high precision sampling rate
@@ -97,6 +97,7 @@ def MNE_Read_EDF(path):
     events = events.as_matrix().astype('int')
    # MNE needs an extra column of zeros in the middle, it won't be used but has to be there
     events = np.insert(events, 1, 0, axis=1)
+
 
     return raw_mne, events, event_id 
 
