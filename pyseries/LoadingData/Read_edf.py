@@ -46,9 +46,10 @@ def MNE_Read_EDF(path):
       event_id: dict(event label : event code)
           dictionary with labels describing the event codes
     """
-    # Load the eeg data 
+    # Load the eeg data  
     print(glob.glob(path +'*.edf'))
-    assert len(glob.glob(path +'*.edf')) == 1 # Only one edf in the directory
+    paths = str(glob.glob(path +'*.edf'))
+    assert len(glob.glob(path +'*.edf')) == 1,path + paths # Only one edf in the directory
     edf_path = glob.glob(path +'*.edf')[0] # from the sygnal.edf file
     
     raw_mne =  mne.io.read_raw_edf(edf_path,stim_channel = None, preload = True)
@@ -99,7 +100,7 @@ def MNE_Read_EDF(path):
     events = np.insert(events, 1, 0, axis=1)
 
 
-    return raw_mne, events, event_id 
+    return raw_mne, events, event_id, log
 
 
 def Combine_EDF_XML(path):
